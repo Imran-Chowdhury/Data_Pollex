@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "737398766210",
+    "project_id": "data-pollex",
+    "storage_bucket": "data-pollex.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737398766210:android:073d5163dafa05a418529b",
+        "android_client_info": {
+          "package_name": "com.example.data_pollex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB93nG31vMczyVzstj06XYhzZ3cW65rYOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
