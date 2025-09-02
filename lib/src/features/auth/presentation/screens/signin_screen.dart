@@ -6,6 +6,7 @@ import '../../../../core/utils/validator.dart';
 import '../../../../widgets/custom_button.dart';
 import '../providers/auth_providers.dart';
 import '../widget/custom_text_field.dart';
+import '../widget/header_container.dart';
 import '../widget/password_text_field.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
@@ -39,134 +40,118 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authViewModelProvider).isLoading;
-    // final visibleState = ref.watch(obscureControllerProvider);
-
-    Size size = MediaQuery.sizeOf(context);
-    double height = size.height;
-    double width = size.width;
 
     return Scaffold(
-      backgroundColor: Color(0xFFffffff),
-      // appBar: AppBar(title: Text('Sign In')),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          /// Full width header
+          const HeaderContainer(),
+
+          /// Main body takes the available space
+
+          Expanded(
+            child: Center(
               child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SignInForm(
+                      formKey: _formKey,
+                      emailController: emailController,
+                      passwordController: passwordController,
+                    ),
                     SizedBox(
-                      height: height * .01,
+                      height: 20,
                     ),
-                    // Image.asset(
-                    //   'assets/images/signin.png', // Your image path
-                    //   height: height * 0.5,
-                    // ),
-                    SizedBox(height: height * 0.0001),
-                    const Text(
-                      'SIGN IN',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text(
-                      'Welcome to Ichiban Auto Limited',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                    ),
-                    SizedBox(height: height * 0.03),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          CustomTextField(
-                            controller: emailController,
-                            labelText: 'Email',
-                            validate: Validator.emailValidator,
-                          ),
-                          SizedBox(height: height * 0.03),
-                          // CustomTextField(
-                          //   controller: passwordController,
-                          //   labelText: 'Password',
-                          //   obscureText: visibleState,
-                          //   validate: Validator.passwordValidator,
-                          //   obscureIcon: IconButton(
-                          //     icon: Icon(
-                          //       visibleState
-                          //           ? Icons.visibility_off
-                          //           : Icons.visibility,
-                          //     ),
-                          //     onPressed: () {
-                          //       // Toggle visibility state here
-                          //       ref
-                          //           .watch(obscureControllerProvider.notifier)
-                          //           .changeVisibility();
-                          //     },
-                          //   ),
-                          // ),
-                          PasswordTextField(
-                            labelText: 'Password',
-                            controller: passwordController,
-                          ),
-                          SizedBox(height: height * 0.02),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: width * 0.2, right: width * 0.2),
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : Center(
                             child: CustomButton(
-                              screenHeight: height,
                               buttonName: 'Sign In',
-                              // buttonColor: const Color(0xFFffc801),
                               buttonColor: const Color(0xFFed2f31),
                               icon: const Icon(
                                 Icons.login_outlined,
                                 color: Colors.white,
                               ),
-                              onpressed: () {
-                                signIn();
-                              },
+                              onpressed: signIn,
                             ),
                           ),
-                          SizedBox(height: height * 0.02),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Don't have an account?",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Don't have an account?"),
+                        const SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUpScreen(),
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SignUpScreen()));
-                                },
-                                child: const Text(
-                                  "Sign up!",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black45,
-                                  ),
-                                ),
-                              ),
-                            ],
+                            );
+                          },
+                          child: const Text(
+                            "Sign up!",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              )),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SignInForm extends StatelessWidget {
+  const SignInForm({
+    super.key,
+    required GlobalKey<FormState> formKey,
+    required this.emailController,
+    required this.passwordController,
+  }) : _formKey = formKey;
+
+  final GlobalKey<FormState> _formKey;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'SIGN IN',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          CustomTextField(
+            controller: emailController,
+            labelText: 'Email',
+            validate: Validator.emailValidator,
+          ),
+          const SizedBox(height: 24),
+          PasswordTextField(
+            labelText: 'Password',
+            controller: passwordController,
+          ),
+        ],
+      ),
     );
   }
 }

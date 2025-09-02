@@ -10,7 +10,6 @@ class SignUpForm extends StatelessWidget {
     super.key,
     required GlobalKey<FormState> formKey,
     required this.nameController,
-    required this.height,
     required this.emailController,
     required this.passwordController,
     required this.confirmPasswordController,
@@ -20,7 +19,7 @@ class SignUpForm extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey;
   final TextEditingController nameController;
-  final double height;
+
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
@@ -32,84 +31,38 @@ class SignUpForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
+          const Text(
+            'SIGN UP',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           CustomTextField(
             controller: nameController,
             labelText: 'Name',
             validate: Validator.personNameValidator,
           ),
-          SizedBox(height: height * 0.03),
+          SizedBox(height: 24),
           CustomTextField(
             controller: emailController,
             labelText: 'Email',
             validate: Validator.emailValidator,
           ),
-          SizedBox(height: height * 0.03),
-          // CustomTextField(
-          //   controller: passwordController,
-          //   labelText: 'Password',
-          //   obscureText: visibleState,
-          //   validate: Validator.passwordValidator,
-          //   obscureIcon: IconButton(
-          //     icon: Icon(visibleState
-          //         ? Icons.visibility_off
-          //         : Icons.visibility),
-          //     onPressed: () {
-          //       // Toggle visibility state here
-          //       ref
-          //           .watch(obscureControllerProvider.notifier)
-          //           .changeVisibility();
-          //     },
-          //   ),
-          // ),
+          SizedBox(height: 24),
 
           PasswordTextField(
             labelText: 'Password',
             controller: passwordController,
           ),
-          SizedBox(height: height * 0.03),
-          // CustomTextField(
-          //   controller: confirmPasswordController,
-          //   labelText: 'Confirm Password',
-          //   obscureText: confirmVisibleState,
-          //   validate: Validator.confirmPasswordValidator,
-          //   obscureIcon: IconButton(
-          //     icon: Icon(confirmVisibleState
-          //         ? Icons.visibility_off
-          //         : Icons.visibility),
-          //     onPressed: () {
-          //       // Toggle visibility state here
-          //       ref
-          //           .watch(confirmPasswordVisibilityProvider
-          //               .notifier)
-          //           .changeVisibility();
-          //     },
-          //   ),
-          // ),
+          SizedBox(height: 24),
 
           PasswordTextField(
             labelText: 'Confirm Password',
             controller: confirmPasswordController,
           ),
 
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Checkbox(
-          //       activeColor: const Color(0xFFed2f31),
-          //       value: _isTeacher,
-          //       onChanged: (_) => _toggleRole('admin'),
-          //     ),
-          //     const Text('Admin'),
-          //     Checkbox(
-          //       activeColor: const Color(0xFFed2f31),
-          //       value: _isStudent,
-          //       onChanged: (_) => _toggleRole('mechanic'),
-          //     ),
-          //     const Text('Mechanic'),
-          //   ],
-          // ),
-
-          // Role selection
+          /// Role selection
           ValueListenableBuilder<String>(
             valueListenable: _roleNotifier,
             builder: (context, role, _) {
