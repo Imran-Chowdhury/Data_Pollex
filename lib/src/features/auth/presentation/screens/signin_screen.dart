@@ -1,13 +1,14 @@
+import 'package:data_pollex/src/core/constants/role.dart';
 import 'package:data_pollex/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:data_pollex/src/features/student/dashboard/presentation/screens/student_dashboard_screen.dart';
+import 'package:data_pollex/src/features/teacher/dashboard/presentation/screens/teacher_dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/utils/validator.dart';
 import '../../../../widgets/custom_button.dart';
 import '../providers/auth_providers.dart';
-import '../widget/custom_text_field.dart';
 import '../widget/header_container.dart';
-import '../widget/password_text_field.dart';
+import '../widget/signin_form.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
@@ -23,15 +24,48 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   void signIn() async {
     if (_formKey.currentState!.validate()) {
-      await ref
-          .read(authViewModelProvider.notifier)
-          .signIn(emailController.text.trim(), passwordController.text.trim());
+      await ref.read(authViewModelProvider.notifier).signIn(
+            emailController.text.trim(),
+            passwordController.text.trim(),
+          );
+      final user = ref.read(authViewModelProvider).user;
+
+      /// If no error then navigate to appropriate screen
+      if (user != null) {
+        if (user.role == Role.teacher) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => TeacherDashboardScreen()),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => StudentDashboardScreen()),
+          );
+        }
+      }
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    ref.listenManual(authViewModelProvider, (prev, next) {
+      /// Show toast on error
+      if (next.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(next.error!),
+        ));
+      }
+    });
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -49,7 +83,6 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           const HeaderContainer(),
 
           /// Main body takes the available space
-
           Expanded(
             child: Center(
               child: SingleChildScrollView(
@@ -61,7 +94,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       emailController: emailController,
                       passwordController: passwordController,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     isLoading
@@ -85,6 +118,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         const SizedBox(width: 5),
                         GestureDetector(
                           onTap: () {
+                            emailController.clear();
+                            passwordController.clear();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -106,49 +141,6 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SignInForm extends StatelessWidget {
-  const SignInForm({
-    super.key,
-    required GlobalKey<FormState> formKey,
-    required this.emailController,
-    required this.passwordController,
-  }) : _formKey = formKey;
-
-  final GlobalKey<FormState> _formKey;
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'SIGN IN',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          CustomTextField(
-            controller: emailController,
-            labelText: 'Email',
-            validate: Validator.emailValidator,
-          ),
-          const SizedBox(height: 24),
-          PasswordTextField(
-            labelText: 'Password',
-            controller: passwordController,
           ),
         ],
       ),

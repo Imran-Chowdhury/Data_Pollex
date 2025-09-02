@@ -1,4 +1,4 @@
-import 'package:data_pollex/src/features/auth/presentation/screens/signin_screen.dart';
+import 'package:data_pollex/src/features/teacher/dashboard/presentation/screens/teacher_dashboard_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,6 +32,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SignInScreen();
+    // return const SignInScreen();
+    return const TeacherDashboardScreen();
   }
 }

@@ -30,6 +30,8 @@ class SignUpForm extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'SIGN UP',

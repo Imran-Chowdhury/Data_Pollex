@@ -32,21 +32,25 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             _roleNotifier.value,
           );
     }
+    final String? error = ref.read(authViewModelProvider).error;
+    if (error == null) {
+      Navigator.pop(context);
+    }
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    ref.listenManual(authViewModelProvider, (prev, next) {
-      if (next.error != null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(next.error!),
-        ));
-      }
-    });
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //
+  //   ref.listenManual(authViewModelProvider, (prev, next) {
+  //     if (next.error != null) {
+  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //         content: Text(next.error!),
+  //       ));
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -61,10 +65,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authViewModelProvider).isLoading;
-
-    // Size size = MediaQuery.sizeOf(context);
-    // double height = size.height;
-    // double width = size.width;
 
     return Scaffold(
       backgroundColor: const Color(0xFFffffff),
@@ -90,10 +90,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         roleNotifier: _roleNotifier,
                       ),
 
-                      isLoading
-                          ? const CircularProgressIndicator()
-                          : Center(
-                              child: CustomButton(
+                      Center(
+                        child: isLoading
+                            ? const CircularProgressIndicator()
+                            : CustomButton(
                                 buttonName: 'Sign Up',
                                 buttonColor: const Color(0XFFd71e23),
                                 icon: const Icon(
@@ -102,7 +102,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                 ),
                                 onpressed: signUp,
                               ),
-                            ),
+                      )
                     ],
                   ),
                 ),
