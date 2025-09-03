@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../view_model/manage_lesson_view_model.dart';
+import '../widgets/add_language_dialog.dart';
+
 class ManageLessonsScreen extends ConsumerWidget {
   final String teacherId;
   const ManageLessonsScreen({super.key, required this.teacherId});

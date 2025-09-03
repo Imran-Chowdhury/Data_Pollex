@@ -1,6 +1,6 @@
+import '../../../../core/base_state/remote_response.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../datasource/data_source.dart';
-import '../datasource/response.dart';
 import '../model/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -8,12 +8,11 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.dataSource);
 
   @override
-  Future<UserRemoteResponse<UserModel?>> signIn(
-          String email, String password) =>
+  Future<RemoteResponse<UserModel?>> signIn(String email, String password) =>
       dataSource.signIn(email, password);
 
   @override
-  Future<UserRemoteResponse<UserModel?>> signUp(
+  Future<RemoteResponse<UserModel?>> signUp(
           String name, String email, String password, String role) =>
       dataSource.signUp(name, email, password, role);
 
@@ -21,6 +20,6 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() => dataSource.signOut();
 
   @override
-  Stream<UserRemoteResponse<UserModel?>> authStateChanges() =>
+  Stream<RemoteResponse<UserModel?>> authStateChanges() =>
       dataSource.authStateChanges();
 }

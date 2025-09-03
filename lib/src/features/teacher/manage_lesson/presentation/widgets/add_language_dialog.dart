@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../provider/manage_lessons_provider.dart';
+import '../view_model/manage_lesson_view_model.dart';
 
 class AddLanguageDialog extends ConsumerStatefulWidget {
   final String teacherId;

@@ -1,10 +1,10 @@
-import '../../data/datasource/response.dart';
+import '../../../../core/base_state/remote_response.dart';
 import '../../data/model/user_model.dart';
 
 abstract class AuthRepository {
-  Future<UserRemoteResponse<UserModel?>> signIn(String email, String password);
-  Future<UserRemoteResponse<UserModel?>> signUp(
+  Future<RemoteResponse<UserModel?>> signIn(String email, String password);
+  Future<RemoteResponse<UserModel?>> signUp(
       String name, String email, String password, String role);
   Future<void> signOut();
-  Stream<UserRemoteResponse<UserModel?>> authStateChanges();
+  Stream<RemoteResponse<UserModel?>> authStateChanges();
 }

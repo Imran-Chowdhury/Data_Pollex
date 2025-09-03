@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/base_state/auth_state.dart';
-import '../../data/datasource/response.dart';
+import '../../../../core/base_state/remote_response.dart';
 import '../../data/model/user_model.dart';
 import '../../domain/repository/auth_repository.dart';
 

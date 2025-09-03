@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:data_pollex/src/features/auth/data/datasource/response.dart';
+import 'package:data_pollex/src/core/base_state/remote_response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../model/user_model.dart';
@@ -10,7 +10,7 @@ class FirebaseAuthDataSource {
 
   FirebaseAuthDataSource(this._auth, this._firestore);
 
-  Future<UserRemoteResponse<UserModel?>> signIn(
+  Future<RemoteResponse<UserModel?>> signIn(
       String email, String password) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
@@ -24,7 +24,7 @@ class FirebaseAuthDataSource {
     }
   }
 
-  Future<UserRemoteResponse<UserModel?>> signUp(
+  Future<RemoteResponse<UserModel?>> signUp(
     String name,
     String email,
     String password,
@@ -55,7 +55,7 @@ class FirebaseAuthDataSource {
     }
   }
 
-  Future<UserRemoteResponse<void>> signOut() async {
+  Future<RemoteResponse<void>> signOut() async {
     try {
       await _auth.signOut();
       return RemoteSuccess(null);
@@ -64,7 +64,7 @@ class FirebaseAuthDataSource {
     }
   }
 
-  Stream<UserRemoteResponse<UserModel?>> authStateChanges() {
+  Stream<RemoteResponse<UserModel?>> authStateChanges() {
     return _auth.authStateChanges().asyncMap((user) async {
       try {
         final userModel = await _userFromFirebase(user);
