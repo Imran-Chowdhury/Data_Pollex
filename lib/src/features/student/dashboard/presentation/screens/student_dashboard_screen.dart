@@ -1,3 +1,4 @@
+import 'package:data_pollex/src/features/teacher/dashboard/presentation/screens/language_option_screen.dart';
 import 'package:flutter/material.dart';
 
 class StudentDashboardScreen extends StatelessWidget {
@@ -37,21 +38,31 @@ class StudentDashboardScreen extends StatelessWidget {
                   mainAxisSpacing: 16,
                   childAspectRatio: 1.2,
                 ),
-                children: const [
-                  DashboardCard(
+                children: [
+                  const DashboardCard(
                     title: "Booked Lessons",
                     icon: Icons.book_online,
                     color: Colors.orangeAccent,
                   ),
-                  DashboardCard(
-                    title: "Upcoming Schedules",
-                    icon: Icons.schedule,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  DashboardCard(
-                    title: "Availability",
-                    icon: Icons.access_time,
-                    color: Colors.greenAccent,
+                  // DashboardCard(
+                  //   title: "Upcoming Schedules",
+                  //   icon: Icons.schedule,
+                  //   color: Colors.lightBlueAccent,
+                  // ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LanguageOptionScreen(),
+                        ),
+                      );
+                    },
+                    child: const DashboardCard(
+                      title: "Availability",
+                      icon: Icons.access_time,
+                      color: Colors.greenAccent,
+                    ),
                   ),
                 ],
               );
@@ -61,7 +72,7 @@ class StudentDashboardScreen extends StatelessWidget {
 
             // Optional: Quick stats or details section
             const Text(
-              "Recent Activity",
+              "Upcoming Schedules",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
