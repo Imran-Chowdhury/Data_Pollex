@@ -13,7 +13,8 @@ final manageLessonRepoProvider = Provider((ref) {
 });
 
 abstract class ManageLessonsRepository {
-  Future<RemoteResponse<List<TeacherLanguage>>> fetchLanguages(
-      String teacherId);
+  Future<RemoteResponse<List<String>>> fetchLanguages(String teacherId);
   Future<RemoteResponse<void>> addLanguage(String teacherId, String language);
+  Future<RemoteResponse<void>> removeLanguage(
+      String teacherId, String language);
 }

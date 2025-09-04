@@ -5,8 +5,9 @@ import '../view_model/manage_lesson_view_model.dart';
 import '../widgets/add_language_dialog.dart';
 
 class ManageLessonsScreen extends ConsumerWidget {
-  final String teacherId;
-  const ManageLessonsScreen({super.key, required this.teacherId});
+  const ManageLessonsScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,25 +15,37 @@ class ManageLessonsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Manage Lessons")),
-      body: state.when(
-        data: (langs) => ListView.builder(
-          itemCount: langs.length,
-          itemBuilder: (context, i) {
-            return Card(
-              child: ListTile(
-                title: Text(langs[i].language),
-              ),
-            );
-          },
-        ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(e.toString())),
+      // body: state.when(
+      //   data: (langs) => ListView.builder(
+      //     itemCount: langs.length,
+      //     itemBuilder: (context, i) {
+      //       return Card(
+      //         child: ListTile(
+      //           title: Text(langs[i]),
+      //         ),
+      //       );
+      //     },
+      //   ),
+      //   loading: () => null,
+      //   // error: (e, _) => Center(child: Text(e.toString())),
+      //   error: (e, _) => null,
+      // ),
+
+      body: ListView.builder(
+        itemCount: state.valueOrNull?.length ?? 0,
+        itemBuilder: (context, i) {
+          final langs = state.valueOrNull!;
+          return Card(
+            child: ListTile(title: Text(langs[i])),
+          );
+        },
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
             context: context,
-            builder: (_) => AddLanguageDialog(teacherId: teacherId),
+            builder: (_) => const AddLanguageDialog(),
           );
         },
         child: const Icon(Icons.add),

@@ -1,4 +1,5 @@
 import 'package:data_pollex/src/features/teacher/dashboard/presentation/widgets/dashboard_tile.dart';
+import 'package:data_pollex/src/features/teacher/manage_lesson/presentation/screens/manage_lesson_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../widgets/dashboard_header.dart';
@@ -10,10 +11,10 @@ class TeacherDashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: const Column(
+      body: Column(
         children: [
           // Header stays on top
-          Align(
+          const Align(
             alignment: Alignment.topCenter,
             child: DashboardHeader(),
           ),
@@ -23,13 +24,22 @@ class TeacherDashboardScreen extends StatelessWidget {
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  TeacherDashboardTile(
-                    icon: Icons.menu_book,
-                    title: "Manage Lessons",
-                    color: Colors.deepPurpleAccent,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ManageLessonsScreen()));
+                    },
+                    child: const TeacherDashboardTile(
+                      icon: Icons.menu_book,
+                      title: "Manage Lessons",
+                      color: Colors.deepPurpleAccent,
+                    ),
                   ),
-                  SizedBox(width: 16), // spacing between tiles
+                  const SizedBox(width: 16), // spacing between tiles
                   TeacherDashboardTile(
                     icon: Icons.schedule,
                     title: "Schedule",
