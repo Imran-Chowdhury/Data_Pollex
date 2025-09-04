@@ -1,9 +1,9 @@
 import 'package:data_pollex/src/features/teacher/dashboard/presentation/widgets/dashboard_tile.dart';
 import 'package:data_pollex/src/features/teacher/manage_lesson/presentation/screens/manage_lesson_screen.dart';
-import 'package:data_pollex/src/features/teacher/manage_schedule/presentation/screens/calendar_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../widgets/dashboard_header.dart';
+import '../../../manage_schedule/presentation/screens/calendar_screen_2.dart';
 
 class TeacherDashboardScreen extends StatelessWidget {
   const TeacherDashboardScreen({super.key});
