@@ -3,7 +3,7 @@ import 'package:data_pollex/src/features/teacher/manage_lesson/presentation/scre
 import 'package:flutter/material.dart';
 
 import '../../../../../widgets/dashboard_header.dart';
-import '../../../manage_schedule/presentation/screens/calendar_screen_2.dart';
+import '../../../manage_schedule/presentation/screens/calendar_screen.dart';
 
 class TeacherDashboardScreen extends StatelessWidget {
   const TeacherDashboardScreen({super.key});
@@ -44,9 +44,11 @@ class TeacherDashboardScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CalendarScreen()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CalendarScreen(),
+                        ),
+                      );
                     },
                     child: const TeacherDashboardTile(
                       icon: Icons.schedule,
@@ -63,67 +65,3 @@ class TeacherDashboardScreen extends StatelessWidget {
     );
   }
 }
-
-// class TeacherDashboardScreen extends StatelessWidget {
-//   const TeacherDashboardScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final size = MediaQuery.sizeOf(context);
-//     double width = size.width;
-//     double height = size.height;
-//     log('The width is $width');
-//     return Scaffold(
-//       backgroundColor: Colors.grey[100],
-//       body: Stack(
-//         children: [
-//           Align(
-//             alignment: Alignment.bottomCenter,
-//             child: FooterContainer(
-//               height: height,
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 // const NameRow(),
-//                 const SizedBox(height: 40),
-//                 // Center the slider using Expanded + Center
-//                 width < 600
-//                     ? Expanded(
-//                         child: Center(
-//                           child: HorizontalProjectSlider(width: width),
-//                         ),
-//                       )
-//                     : Center(
-//                         child: Row(
-//                           mainAxisAlignment:
-//                               MainAxisAlignment.center, // Center horizontally
-//                           crossAxisAlignment:
-//                               CrossAxisAlignment.center, // Center vertically
-//                           children: [
-//                             TeacherDashboardTile(
-//                               icon: Icons.menu_book,
-//                               title: "Manage Lessons",
-//                               color: Colors.deepPurpleAccent,
-//                             ),
-//                             const SizedBox(
-//                                 width: 20), // Add spacing between tiles
-//                             TeacherDashboardTile(
-//                               icon: Icons.schedule,
-//                               title: "Schedule",
-//                               color: Colors.purple,
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

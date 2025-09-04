@@ -35,12 +35,14 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         if (user.role == Role.teacher) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => TeacherDashboardScreen()),
+            MaterialPageRoute(
+                builder: (context) => const TeacherDashboardScreen()),
           );
         } else {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => StudentDashboardScreen()),
+            MaterialPageRoute(
+                builder: (context) => const StudentDashboardScreen()),
           );
         }
       }
