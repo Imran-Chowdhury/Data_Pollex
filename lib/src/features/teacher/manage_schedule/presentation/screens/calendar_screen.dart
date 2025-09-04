@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -11,8 +14,98 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   final CalendarView _calendarView = CalendarView.month;
-  final List<Appointment> _appointments = [];
   final List<String> _languages = ['English', 'Bangla', 'Russian', 'French'];
+  List<Appointment> _appointments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAppointments();
+  }
+
+  /// Try online first, then SharedPreferences
+  Future<void> _fetchAppointments() async {
+    try {
+      // Try fetching from Firestore
+      final snapshot =
+          await FirebaseFirestore.instance.collection('schedules').get();
+      final data = snapshot.docs.map((doc) => doc.data()).toList();
+
+      final appointments = data.map((item) {
+        return Appointment(
+          startTime: DateTime.parse(item['date']),
+          endTime: DateTime.parse(item['date']).add(const Duration(hours: 1)),
+          subject: "${item['courseName']} (${item['teacherName']})",
+          color: item['isBooked'] ? Colors.grey : Colors.blue,
+        );
+      }).toList();
+
+      setState(() => _appointments = appointments);
+
+      // Save to SharedPreferences for offline
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('appointments', jsonEncode(data));
+    } catch (e) {
+      // If Firestore fails, fallback to SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final storedData = prefs.getString('appointments');
+      if (storedData != null) {
+        final List decoded = jsonDecode(storedData);
+        setState(() {
+          _appointments = decoded.map((item) {
+            return Appointment(
+              startTime: DateTime.parse(item['date']),
+              endTime:
+                  DateTime.parse(item['date']).add(const Duration(hours: 1)),
+              subject: "${item['courseName']} (${item['teacherName']})",
+              color: item['isBooked'] ? Colors.grey : Colors.blue,
+            );
+          }).toList();
+        });
+      } else {
+        setState(() => _appointments = []); // No data, show empty calendar
+      }
+    }
+  }
+
+  Future<void> _addAppointment(DateTime selectedDate, String courseName) async {
+    final newSchedule = {
+      "courseName": courseName.toLowerCase(),
+      "teacherId": "johnId", // TODO: replace with logged in teacherId
+      "teacherName": "John", // TODO: replace with logged in teacherName
+      "date": DateFormat('yyyy-MM-dd').format(selectedDate),
+      "isBooked": false,
+    };
+
+    try {
+      // Add to Firestore
+      await FirebaseFirestore.instance.collection('schedules').add(newSchedule);
+
+      // Add to local appointments
+      setState(() {
+        _appointments.add(
+          Appointment(
+            startTime: selectedDate,
+            endTime: selectedDate.add(const Duration(hours: 1)),
+            subject:
+                "${newSchedule['courseName']} (${newSchedule['teacherName']})",
+            color: Colors.blue,
+          ),
+        );
+      });
+
+      // Update SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final storedData = prefs.getString('appointments');
+      List list = storedData != null ? jsonDecode(storedData) : [];
+      list.add(newSchedule);
+      await prefs.setString('appointments', jsonEncode(list));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Failed to add appointment online")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,20 +167,21 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       final appointment = appointmentsForDate[index];
                       return ListTile(
                         title: Text(appointment.subject),
+                        subtitle: Text(appointment.color == Colors.grey
+                            ? "Booked"
+                            : "Available"),
                       );
                     },
                   ),
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text('OK'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close list dialog first
+                Navigator.of(context).pop();
                 _showAddAppointmentDialog(selectedDate);
               },
               child: const Text('Add'),
@@ -132,20 +226,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 if (selectedLanguage != null) {
-                  setState(() {
-                    _appointments.add(
-                      Appointment(
-                        startTime: selectedDate,
-                        endTime: selectedDate.add(const Duration(hours: 1)),
-                        subject: selectedLanguage!,
-                        color: Colors.blue,
-                      ),
-                    );
-                  });
+                  await _addAppointment(selectedDate, selectedLanguage!);
                 }
-                Navigator.of(context).pop(); // Close add dialog
+                Navigator.of(context).pop();
               },
               child: const Text('Add'),
             ),
