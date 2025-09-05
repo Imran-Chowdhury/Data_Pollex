@@ -1,4 +1,4 @@
-import 'package:data_pollex/src/features/teacher/dashboard/presentation/screens/language_option_screen.dart';
+import 'package:data_pollex/src/features/student/dashboard/presentation/screens/language_option_screen.dart';
 import 'package:flutter/material.dart';
 
 class StudentDashboardScreen extends StatelessWidget {

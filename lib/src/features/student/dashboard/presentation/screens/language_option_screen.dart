@@ -1,3 +1,4 @@
+import 'package:data_pollex/src/features/student/available_teachers/presentation/screens/available_teacher_screen.dart';
 import 'package:flutter/material.dart';
 
 class LanguageOptionScreen extends StatelessWidget {
@@ -34,9 +35,12 @@ class LanguageOptionScreen extends StatelessWidget {
             final lang = languages[index];
             return GestureDetector(
               onTap: () {
-                // You can navigate further to language-specific schedule here
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${lang['name']} selected')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => TeacherAvailabilityScreen(
+                        language: lang['name'] as String),
+                  ),
                 );
               },
               child: Card(
