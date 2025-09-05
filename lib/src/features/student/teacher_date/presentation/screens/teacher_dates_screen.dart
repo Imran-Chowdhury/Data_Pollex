@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:data_pollex/src/features/auth/presentation/providers/auth_providers.dart';
 import 'package:data_pollex/src/features/student/teacher_date/presentation/screens/teacher_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../data/model/schedule_model.dart';
 import '../view_model/dates_view_model.dart';
 
 class TeacherDatesScreen extends ConsumerWidget {
@@ -18,16 +20,12 @@ class TeacherDatesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    log('The teacherId is $teacherId, the language is $language');
     final filter = ScheduleFilter(teacherId: teacherId, language: language);
     final schedulesAsync = ref.watch(
       schedulesStreamProvider(
         filter,
       ),
     );
-    log('The widget is being rebuilt');
-
-    // final bookingState = ref.watch(bookingControllerProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Available Dates")),
@@ -54,9 +52,14 @@ class TeacherDatesScreen extends ConsumerWidget {
                         builder: (_) => TeacherProfileScreen(
                           teacherName: schedule.teacherName,
                           onBook: () {
+                            final studentName =
+                                ref.read(authViewModelProvider).user!.name;
+                            final studentId =
+                                ref.read(authViewModelProvider).user!.id;
                             ref
                                 .read(bookingControllerProvider.notifier)
-                                .bookSchedule(schedule.id);
+                                .bookSchedule(
+                                    schedule.id, studentName, studentId);
                           },
                         ),
                       ),

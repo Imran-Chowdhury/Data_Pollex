@@ -14,10 +14,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   void _watchAuthState() {
     repository.authStateChanges().listen((response) {
-      if (response is RemoteSuccess<UserModel?>) {
+      if (response is SuccessResponse<UserModel?>) {
         state =
             state.copyWith(user: response.data, isLoading: false, error: null);
-      } else if (response is RemoteFailure<UserModel?>) {
+      } else if (response is FailureResponse<UserModel?>) {
         state = state.copyWith(
             user: null, isLoading: false, error: response.message);
       }
@@ -28,10 +28,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
     state = state.copyWith(isLoading: true);
     try {
       final response = await repository.signIn(email, password);
-      if (response is RemoteSuccess<UserModel?>) {
+      if (response is SuccessResponse<UserModel?>) {
         state =
             state.copyWith(user: response.data, isLoading: false, error: null);
-      } else if (response is RemoteFailure<UserModel?>) {
+      } else if (response is FailureResponse<UserModel?>) {
         state = state.copyWith(isLoading: false, error: response.message);
       }
     } catch (e) {
@@ -51,10 +51,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
     try {
       final response = await repository.signUp(name, email, password, role);
-      if (response is RemoteSuccess<UserModel?>) {
+      if (response is SuccessResponse<UserModel?>) {
         state =
             state.copyWith(user: response.data, isLoading: false, error: null);
-      } else if (response is RemoteFailure<UserModel?>) {
+      } else if (response is FailureResponse<UserModel?>) {
         state = state.copyWith(isLoading: false, error: response.message);
       }
     } catch (e) {

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/base_state/remote_response.dart';
-import '../model/language_model.dart';
 
 final manageLessonDataSourceProvider = Provider((ref) {
   return ManageLessonsRemoteDataSource(
@@ -16,25 +15,24 @@ class ManageLessonsRemoteDataSource {
 
   ManageLessonsRemoteDataSource(this.auth, this._db);
 
-  Future<RemoteResponse<List<String>>> fetchLanguages(String teacherId) async {
+  Future<Response<List<String>>> fetchLanguages(String teacherId) async {
     try {
       final doc =
           await _db.collection("teachers_languages").doc(teacherId).get();
-      if (!doc.exists) return RemoteSuccess([]);
+      if (!doc.exists) return SuccessResponse([]);
 
       final data = doc.data();
       final langs = data != null && data["languages"] != null
           ? List<String>.from(data["languages"])
           : <String>[];
 
-      return RemoteSuccess(langs);
+      return SuccessResponse(langs);
     } catch (e) {
-      return RemoteFailure("Failed to fetch languages: $e");
+      return FailureResponse("Failed to fetch languages: $e");
     }
   }
 
-  Future<RemoteResponse<void>> addLanguage(
-      String teacherId, String language) async {
+  Future<Response<void>> addLanguage(String teacherId, String language) async {
     try {
       final docRef = _db.collection("teachers_languages").doc(teacherId);
 
@@ -48,7 +46,7 @@ class ManageLessonsRemoteDataSource {
             : <String>[];
 
         if (languages.contains(language)) {
-          return RemoteFailure("This language is already present");
+          return FailureResponse("This language is already present");
         }
       }
 
@@ -60,13 +58,13 @@ class ManageLessonsRemoteDataSource {
         SetOptions(merge: true),
       );
 
-      return RemoteSuccess(null);
+      return SuccessResponse(null);
     } catch (e) {
-      return RemoteFailure("Failed to add language: $e");
+      return FailureResponse("Failed to add language: $e");
     }
   }
 
-  Future<RemoteResponse<void>> removeLanguage(
+  Future<Response<void>> removeLanguage(
       String teacherId, String language) async {
     try {
       final docRef = _db.collection("teachers_languages").doc(teacherId);
@@ -75,9 +73,9 @@ class ManageLessonsRemoteDataSource {
         "languages": FieldValue.arrayRemove([language])
       });
 
-      return RemoteSuccess(null);
+      return SuccessResponse(null);
     } catch (e) {
-      return RemoteFailure("Failed to remove language: $e");
+      return FailureResponse("Failed to remove language: $e");
     }
   }
 }

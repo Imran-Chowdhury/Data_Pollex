@@ -4,7 +4,6 @@ import 'package:data_pollex/src/features/teacher/manage_lesson/service/manage_le
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/base_state/remote_response.dart';
-import '../../data/model/language_model.dart';
 
 final manageLessonRepoProvider = Provider((ref) {
   return ManageLessonsRepositoryImpl(
@@ -13,8 +12,7 @@ final manageLessonRepoProvider = Provider((ref) {
 });
 
 abstract class ManageLessonsRepository {
-  Future<RemoteResponse<List<String>>> fetchLanguages(String teacherId);
-  Future<RemoteResponse<void>> addLanguage(String teacherId, String language);
-  Future<RemoteResponse<void>> removeLanguage(
-      String teacherId, String language);
+  Future<Response<List<String>>> fetchLanguages(String teacherId);
+  Future<Response<void>> addLanguage(String teacherId, String language);
+  Future<Response<void>> removeLanguage(String teacherId, String language);
 }

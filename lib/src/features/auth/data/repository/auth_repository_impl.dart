@@ -8,11 +8,11 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.dataSource);
 
   @override
-  Future<RemoteResponse<UserModel?>> signIn(String email, String password) =>
+  Future<Response<UserModel?>> signIn(String email, String password) =>
       dataSource.signIn(email, password);
 
   @override
-  Future<RemoteResponse<UserModel?>> signUp(
+  Future<Response<UserModel?>> signUp(
           String name, String email, String password, String role) =>
       dataSource.signUp(name, email, password, role);
 
@@ -20,6 +20,6 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() => dataSource.signOut();
 
   @override
-  Stream<RemoteResponse<UserModel?>> authStateChanges() =>
+  Stream<Response<UserModel?>> authStateChanges() =>
       dataSource.authStateChanges();
 }

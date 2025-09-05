@@ -10,21 +10,20 @@ class FirebaseAuthDataSource {
 
   FirebaseAuthDataSource(this._auth, this._firestore);
 
-  Future<RemoteResponse<UserModel?>> signIn(
-      String email, String password) async {
+  Future<Response<UserModel?>> signIn(String email, String password) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       final user = await _userFromFirebase(credential.user);
-      return RemoteSuccess(user);
+      return SuccessResponse(user);
     } catch (e) {
-      return RemoteFailure(e.toString());
+      return FailureResponse(e.toString());
     }
   }
 
-  Future<RemoteResponse<UserModel?>> signUp(
+  Future<Response<UserModel?>> signUp(
     String name,
     String email,
     String password,
@@ -47,30 +46,30 @@ class FirebaseAuthDataSource {
             .collection("users")
             .doc(user.uid)
             .set(userModel.toMap());
-        return RemoteSuccess(userModel);
+        return SuccessResponse(userModel);
       }
-      return RemoteFailure("User creation failed");
+      return FailureResponse("User creation failed");
     } catch (e) {
-      return RemoteFailure(e.toString());
+      return FailureResponse(e.toString());
     }
   }
 
-  Future<RemoteResponse<void>> signOut() async {
+  Future<Response<void>> signOut() async {
     try {
       await _auth.signOut();
-      return RemoteSuccess(null);
+      return SuccessResponse(null);
     } catch (e) {
-      return RemoteFailure(e.toString());
+      return FailureResponse(e.toString());
     }
   }
 
-  Stream<RemoteResponse<UserModel?>> authStateChanges() {
+  Stream<Response<UserModel?>> authStateChanges() {
     return _auth.authStateChanges().asyncMap((user) async {
       try {
         final userModel = await _userFromFirebase(user);
-        return RemoteSuccess(userModel);
+        return SuccessResponse(userModel);
       } catch (e) {
-        return RemoteFailure(e.toString());
+        return FailureResponse(e.toString());
       }
     });
   }

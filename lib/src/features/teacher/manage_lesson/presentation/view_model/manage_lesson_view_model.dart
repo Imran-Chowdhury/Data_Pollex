@@ -5,7 +5,6 @@ import 'package:data_pollex/src/features/teacher/manage_lesson/domain/repository
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/base_state/remote_response.dart';
-import '../../data/model/language_model.dart';
 
 final manageLessonsProvider =
     AutoDisposeAsyncNotifierProvider<ManageLessonsViewModel, List<String>>(
@@ -22,9 +21,9 @@ class ManageLessonsViewModel extends AutoDisposeAsyncNotifier<List<String>> {
     try {
       final res = await _repo.fetchLanguages(teacherId);
 
-      if (res is RemoteSuccess<List<String>>) {
+      if (res is SuccessResponse<List<String>>) {
         return res.data;
-      } else if (res is RemoteFailure<List<String>>) {
+      } else if (res is FailureResponse<List<String>>) {
         // Return empty list on failure
         return [];
       } else {
@@ -41,14 +40,14 @@ class ManageLessonsViewModel extends AutoDisposeAsyncNotifier<List<String>> {
 
     final res = await _repo.addLanguage(teacherId, language);
 
-    if (res is RemoteFailure) {
+    if (res is FailureResponse) {
       state = AsyncValue.error(res.message, StackTrace.current);
-    } else if (res is RemoteSuccess<void>) {
+    } else if (res is SuccessResponse<void>) {
       // Refresh list after successful add
       final refreshed = await _repo.fetchLanguages(teacherId);
-      if (refreshed is RemoteSuccess<List<String>>) {
+      if (refreshed is SuccessResponse<List<String>>) {
         state = AsyncValue.data(refreshed.data);
-      } else if (refreshed is RemoteFailure<List<String>>) {
+      } else if (refreshed is FailureResponse<List<String>>) {
         state = AsyncValue.error(refreshed.message, StackTrace.current);
       } else {
         state = AsyncValue.error("Unknown error", StackTrace.current);
@@ -61,14 +60,14 @@ class ManageLessonsViewModel extends AutoDisposeAsyncNotifier<List<String>> {
 
     final res = await _repo.removeLanguage(teacherId, language);
 
-    if (res is RemoteFailure) {
+    if (res is FailureResponse) {
       state = AsyncValue.error(res.message, StackTrace.current);
-    } else if (res is RemoteSuccess<void>) {
+    } else if (res is SuccessResponse<void>) {
       // Refresh list after removal
       final refreshed = await _repo.fetchLanguages(teacherId);
-      if (refreshed is RemoteSuccess<List<String>>) {
+      if (refreshed is SuccessResponse<List<String>>) {
         state = AsyncValue.data(refreshed.data);
-      } else if (refreshed is RemoteFailure<List<String>>) {
+      } else if (refreshed is FailureResponse<List<String>>) {
         state = AsyncValue.error(refreshed.message, StackTrace.current);
       } else {
         state = AsyncValue.error("Unknown error", StackTrace.current);

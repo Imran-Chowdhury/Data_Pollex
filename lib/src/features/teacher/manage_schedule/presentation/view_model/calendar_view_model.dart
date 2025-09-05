@@ -30,12 +30,12 @@ class ScheduleController extends AsyncNotifier<List<Appointment>> {
 
     final response = await _repository.addSchedule(schedule);
 
-    if (response is RemoteSuccess<void>) {
+    if (response is SuccessResponse<void>) {
       // Remote add succeeded → refresh schedules
       state = await AsyncValue.guard(() async {
         return await _repository.getSchedules();
       });
-    } else if (response is RemoteFailure) {
+    } else if (response is FailureResponse) {
       // Keep old state but mark error with actual message
       state = AsyncError(
         response.message,

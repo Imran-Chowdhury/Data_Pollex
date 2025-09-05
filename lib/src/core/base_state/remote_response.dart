@@ -1,12 +1,12 @@
-abstract class RemoteResponse<T> {}
+abstract class Response<T> {}
 
-class RemoteSuccess<T> extends RemoteResponse<T> {
+class SuccessResponse<T> extends Response<T> {
   final T data;
-  RemoteSuccess(this.data);
+  SuccessResponse(this.data);
 }
 
-class RemoteFailure<T> extends RemoteResponse<T> {
+class FailureResponse<T> extends Response<T> {
   final String message;
   final int? statusCode;
-  RemoteFailure(this.message, {this.statusCode});
+  FailureResponse(this.message, {this.statusCode});
 }
