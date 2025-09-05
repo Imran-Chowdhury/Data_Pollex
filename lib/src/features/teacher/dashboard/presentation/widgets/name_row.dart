@@ -1,3 +1,4 @@
+import 'package:data_pollex/src/features/auth/presentation/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,7 +58,23 @@ class NameRow extends ConsumerWidget {
               size: 35,
               color: Colors.deepPurple,
             ),
-          )
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              ref.read(authViewModelProvider.notifier).signOut().then((_) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignInScreen(),
+                  ),
+                );
+              });
+            },
+          ),
         ],
       ),
     );

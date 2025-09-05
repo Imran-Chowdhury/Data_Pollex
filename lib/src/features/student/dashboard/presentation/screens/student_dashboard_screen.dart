@@ -1,5 +1,9 @@
 import 'package:data_pollex/src/features/student/dashboard/presentation/screens/language_option_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../auth/presentation/providers/auth_providers.dart';
+import '../../../../auth/presentation/screens/signin_screen.dart';
 
 class StudentDashboardScreen extends StatelessWidget {
   const StudentDashboardScreen({super.key});
@@ -20,9 +24,35 @@ class StudentDashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Welcome Back!",
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            Consumer(
+              builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Welcome Back!",
+                      style:
+                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.logout),
+                      onPressed: () {
+                        ref
+                            .read(authViewModelProvider.notifier)
+                            .signOut()
+                            .then((_) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignInScreen(),
+                            ),
+                          );
+                        });
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: 16),
 

@@ -29,10 +29,11 @@ class TeacherDashboardScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ManageLessonsScreen()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ManageLessonsScreen(),
+                        ),
+                      );
                     },
                     child: const TeacherDashboardTile(
                       icon: Icons.menu_book,

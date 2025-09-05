@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_pollex/src/features/auth/data/model/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final teachersByLanguageProvider =
     StreamProvider.family.autoDispose<List<UserModel>, String>((ref, language) {
   final firestore = FirebaseFirestore.instance;
+
+  ref.onDispose(() {
+    log('provider diposed');
+  });
+  // Prevent caching
 
   return firestore
       .collection("teachers_languages")
@@ -24,7 +31,7 @@ final teachersByLanguageProvider =
       );
     }));
 
-    // Filter out nulls (if user missing)
+    // Filtering out nulls (if user missing)
     return teachers.whereType<UserModel>().toList();
   });
 });
