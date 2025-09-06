@@ -12,17 +12,18 @@ class ScheduleController extends AsyncNotifier<List<Appointment>> {
   @override
   Future<List<Appointment>> build() async {
     _repository = ref.read(scheduleRepositoryProvider);
+    final teacherId = ref.watch(authViewModelProvider).user!.id;
     // Initial fetch
-    return await _repository.getSchedules();
+    return await _repository.getSchedules(teacherId);
   }
 
   /// Reload schedules (online → offline fallback)
-  Future<void> loadSchedules() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      return await _repository.getSchedules();
-    });
-  }
+  // Future<void> loadSchedules() async {
+  //   state = const AsyncLoading();
+  //   state = await AsyncValue.guard(() async {
+  //     return await _repository.getSchedules();
+  //   });
+  // }
 
   /// Add a new schedule (if success → refresh, else keep old state)
   Future<void> addSchedule(Map<String, dynamic> schedule) async {
@@ -33,7 +34,7 @@ class ScheduleController extends AsyncNotifier<List<Appointment>> {
     if (response is SuccessResponse<void>) {
       // Remote add succeeded → refresh schedules
       state = await AsyncValue.guard(() async {
-        return await _repository.getSchedules();
+        return await _repository.getSchedules(schedule['teacherId']);
       });
     } else if (response is FailureResponse) {
       // Keep old state but mark error with actual message

@@ -69,10 +69,22 @@ class StudentDashboardScreen extends StatelessWidget {
                   childAspectRatio: 1.2,
                 ),
                 children: [
-                  const DashboardCard(
-                    title: "Booked Lessons",
-                    icon: Icons.book_online,
-                    color: Colors.orangeAccent,
+                  GestureDetector(
+                    child: const DashboardCard(
+                      title: "Booked Lessons",
+                      icon: Icons.book_online,
+                      color: Colors.orangeAccent,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const LanguageOptionScreen(
+                            whereTo: 'Booked Lessons',
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   // DashboardCard(
                   //   title: "Upcoming Schedules",
@@ -84,7 +96,9 @@ class StudentDashboardScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LanguageOptionScreen(),
+                          builder: (context) => const LanguageOptionScreen(
+                            whereTo: 'Teacher Availability',
+                          ),
                         ),
                       );
                     },

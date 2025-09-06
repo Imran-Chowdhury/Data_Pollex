@@ -4,23 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/model/schedule_model.dart';
 
-// final schedulesStreamProvider = StreamProvider.autoDispose
-//     .family<List<Schedule>, ScheduleFilter>((ref, filter) {
-//   final firestore = ref.read(fireStoreProvider);
-//
-//   return firestore
-//       .collection("schedules")
-//       .where("teacherId", isEqualTo: filter.teacherId)
-//       .where("language", isEqualTo: filter.language)
-//       .where("isBooked", isEqualTo: false)
-//       .snapshots()
-//       .map((snapshot) {
-//     final data = snapshot.docs.map((doc) => Schedule.fromDoc(doc)).toList();
-//
-//     return data;
-//   });
-// });
-
 /// Stream listens to the list of dates
 final schedulesStreamProvider = StreamProvider.autoDispose
     .family<List<Schedule>, ScheduleFilter>((ref, filter) {
@@ -37,7 +20,7 @@ final bookingControllerProvider =
 );
 
 class BookingController extends AutoDisposeAsyncNotifier<void> {
-  late final TeacherDatesRepositoryImpl repository =
+  late final TeacherDatesRepository repository =
       ref.read(teachersDateRepoProvider);
   @override
   Future<void> build() async {
@@ -45,11 +28,11 @@ class BookingController extends AutoDisposeAsyncNotifier<void> {
   }
 
   Future<void> bookSchedule(
-      String scheduleId, String studentName, String studentId) async {
+      Schedule schedule, String studentName, String studentId) async {
     state = const AsyncLoading();
     try {
       final res =
-          await repository.bookSchedule(scheduleId, studentName, studentId);
+          await repository.bookSchedule(schedule, studentName, studentId);
       if (res is SuccessResponse) {
         state = const AsyncData(null);
       } else if (res is FailureResponse) {
@@ -60,23 +43,3 @@ class BookingController extends AutoDisposeAsyncNotifier<void> {
     }
   }
 }
-
-// class BookingController extends AutoDisposeAsyncNotifier<void> {
-//   @override
-//   Future<void> build() async {
-//     // no state initially
-//   }
-//
-//   Future<void> bookSchedule(String scheduleId) async {
-//     state = const AsyncLoading();
-//     try {
-//       final firestore = FirebaseFirestore.instance;
-//       await firestore.collection("schedules").doc(scheduleId).update({
-//         "isBooked": true,
-//       });
-//       state = const AsyncData(null);
-//     } catch (e, st) {
-//       state = AsyncError(e, st);
-//     }
-//   }
-// }

@@ -19,8 +19,8 @@ class ScheduleRepository {
 
   ScheduleRepository(this.remote, this.localDB);
 
-  Future<List<Appointment>> getSchedules() async {
-    final response = await remote.fetchSchedules();
+  Future<List<Appointment>> getSchedules(String teacherId) async {
+    final response = await remote.fetchSchedules(teacherId);
 
     if (response is SuccessResponse<List<Map<String, dynamic>>>) {
       final data = response.data;
@@ -42,12 +42,14 @@ class ScheduleRepository {
     return [];
   }
 
-  Future<Response<void>> addSchedule(Map<String, dynamic> schedule) async {
+  Future<Response<void>> addSchedule(
+    Map<String, dynamic> schedule,
+  ) async {
     final response = await remote.addSchedule(schedule);
 
     if (response is SuccessResponse<void>) {
       // Refresh cache only if remote succeeded
-      final fetchResponse = await remote.fetchSchedules();
+      final fetchResponse = await remote.fetchSchedules(schedule['teacherId']);
 
       if (fetchResponse is SuccessResponse<List<Map<String, dynamic>>>) {
         await localDB.saveSchedules(fetchResponse.data);

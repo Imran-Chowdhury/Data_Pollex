@@ -11,7 +11,6 @@ final teachersByLanguageProvider =
   ref.onDispose(() {
     log('provider diposed');
   });
-  // Prevent caching
 
   return firestore
       .collection("teachers_languages")

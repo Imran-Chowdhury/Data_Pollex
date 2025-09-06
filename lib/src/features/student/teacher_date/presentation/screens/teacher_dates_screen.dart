@@ -58,8 +58,7 @@ class TeacherDatesScreen extends ConsumerWidget {
                                 ref.read(authViewModelProvider).user!.id;
                             ref
                                 .read(bookingControllerProvider.notifier)
-                                .bookSchedule(
-                                    schedule.id, studentName, studentId);
+                                .bookSchedule(schedule, studentName, studentId);
                           },
                         ),
                       ),

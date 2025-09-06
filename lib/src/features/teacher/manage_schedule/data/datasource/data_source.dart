@@ -10,9 +10,13 @@ final calendarRemoteProvider = Provider((ref) {
 class CalendarRemoteDataSource {
   final _firestore = FirebaseFirestore.instance;
 
-  Future<Response<List<Map<String, dynamic>>>> fetchSchedules() async {
+  Future<Response<List<Map<String, dynamic>>>> fetchSchedules(
+      String teacherId) async {
     try {
-      final snapshot = await _firestore.collection('schedules').get();
+      final snapshot = await _firestore
+          .collection('schedules')
+          .where('teacherId', isEqualTo: teacherId)
+          .get();
       final schedules = snapshot.docs.map((doc) => doc.data()).toList();
       return SuccessResponse(schedules);
     } catch (e) {

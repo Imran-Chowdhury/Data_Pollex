@@ -1,8 +1,12 @@
 import 'package:data_pollex/src/features/student/available_teachers/presentation/screens/available_teacher_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../booked_lessons/presentation/screens/booked_lesson_screen.dart';
+
 class LanguageOptionScreen extends StatelessWidget {
-  const LanguageOptionScreen({super.key});
+  const LanguageOptionScreen({super.key, required this.whereTo});
+
+  final String whereTo;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +42,12 @@ class LanguageOptionScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => TeacherAvailabilityScreen(
-                        language: lang['name'] as String),
+                    builder: (_) => whereTo == 'Teacher Availability'
+                        ? TeacherAvailabilityScreen(
+                            language: lang['name'] as String)
+                        : BookedSchedulesScreen(
+                            language: lang['name'] as String,
+                          ),
                   ),
                 );
               },
