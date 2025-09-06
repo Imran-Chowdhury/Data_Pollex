@@ -8,7 +8,25 @@ import '../../domain/repository/auth_repository.dart';
 class AuthViewModel extends StateNotifier<AuthState> {
   final AuthRepository repository;
 
+  // AuthViewModel({required this.repository}) : super(const AuthState()) {
+  //   _watchAuthState();
+  // }
+
   AuthViewModel({required this.repository}) : super(const AuthState()) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    state = state.copyWith(isLoading: true);
+
+    final currentUser =
+        await repository.getCurrentUser(); // from FirebaseAuth.currentUser
+    if (currentUser != null) {
+      state = state.copyWith(user: currentUser, isLoading: false, error: null);
+    } else {
+      state = state.copyWith(user: null, isLoading: false, error: null);
+    }
+
     _watchAuthState();
   }
 

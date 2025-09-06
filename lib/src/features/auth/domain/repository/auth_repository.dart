@@ -7,4 +7,5 @@ abstract class AuthRepository {
       String name, String email, String password, String role);
   Future<void> signOut();
   Stream<DataResponse<UserModel?>> authStateChanges();
+  Future<UserModel?>? getCurrentUser();
 }

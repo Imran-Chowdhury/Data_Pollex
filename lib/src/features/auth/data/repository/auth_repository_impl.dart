@@ -22,4 +22,9 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Stream<DataResponse<UserModel?>> authStateChanges() =>
       dataSource.authStateChanges();
+
+  @override
+  Future<UserModel?>? getCurrentUser() {
+    return dataSource.getCurrentUser();
+  }
 }

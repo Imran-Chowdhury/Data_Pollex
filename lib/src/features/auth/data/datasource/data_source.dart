@@ -10,6 +10,14 @@ class FirebaseAuthDataSource {
 
   FirebaseAuthDataSource(this._auth, this._firestore);
 
+  Future<UserModel?>? getCurrentUser() {
+    final user = _auth.currentUser;
+    if (user != null) {
+      return _userFromFirebase(user); // however you map it
+    }
+    return null;
+  }
+
   Future<DataResponse<UserModel?>> signIn(String email, String password) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
