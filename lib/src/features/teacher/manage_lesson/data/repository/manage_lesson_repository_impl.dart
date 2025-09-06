@@ -11,65 +11,66 @@ class ManageLessonsRepositoryImpl implements ManageLessonsRepository {
   ManageLessonsRepositoryImpl({required this.remote, required this.localDB});
 
   @override
-  Future<Response<List<String>>> fetchLanguages(String teacherId) async {
+  Future<DataResponse<List<String>>> fetchLanguages(String teacherId) async {
     try {
       final remoteResponse = await remote.fetchLanguages(teacherId);
 
-      if (remoteResponse is SuccessResponse<List<String>>) {
+      if (remoteResponse is Success<List<String>>) {
         // Cache locally
         await localDB.addLanguage(teacherId, ""); // No-op to ensure map exists
         final langs = remoteResponse.data;
         await localDB.saveTeacherLanguages({teacherId: langs});
-        return SuccessResponse(langs);
-      } else if (remoteResponse is FailureResponse) {
+        return Success(langs);
+      } else if (remoteResponse is Failure) {
         final local = await localDB.fetchLanguages(teacherId);
-        if (local.isNotEmpty) return SuccessResponse(local);
+        if (local.isNotEmpty) return Success(local);
 
-        return FailureResponse('Could not find any lesson');
+        return Failure('Could not find any lesson');
       }
 
-      return FailureResponse("Unknown error while fetching languages");
+      return Failure("Unknown error while fetching languages");
     } catch (e) {
       final local = await localDB.fetchLanguages(teacherId);
-      if (local.isNotEmpty) return SuccessResponse(local);
-      return FailureResponse("Failed to fetch languages: $e");
+      if (local.isNotEmpty) return Success(local);
+      return Failure("Failed to fetch languages: $e");
     }
   }
 
   @override
-  Future<Response<void>> addLanguage(String teacherId, String language) async {
+  Future<DataResponse<void>> addLanguage(
+      String teacherId, String language) async {
     try {
       final remoteResponse = await remote.addLanguage(teacherId, language);
 
-      if (remoteResponse is SuccessResponse<void>) {
+      if (remoteResponse is Success<void>) {
         await localDB.addLanguage(teacherId, language);
-        return SuccessResponse(null);
-      } else if (remoteResponse is FailureResponse) {
-        return FailureResponse(remoteResponse.message);
+        return Success(null);
+      } else if (remoteResponse is Failure) {
+        return Failure(remoteResponse.message);
       }
 
-      return FailureResponse("Unknown error while adding language");
+      return Failure("Unknown error while adding language");
     } catch (e) {
-      return FailureResponse("Failed to add language: $e");
+      return Failure("Failed to add language: $e");
     }
   }
 
   @override
-  Future<Response<void>> removeLanguage(
+  Future<DataResponse<void>> removeLanguage(
       String teacherId, String language) async {
     try {
       final remoteResponse = await remote.removeLanguage(teacherId, language);
 
-      if (remoteResponse is SuccessResponse<void>) {
+      if (remoteResponse is Success<void>) {
         await localDB.removeLanguage(teacherId, language);
-        return SuccessResponse(null);
-      } else if (remoteResponse is FailureResponse) {
-        return FailureResponse(remoteResponse.message);
+        return Success(null);
+      } else if (remoteResponse is Failure) {
+        return Failure(remoteResponse.message);
       }
 
-      return FailureResponse("Unknown error while removing language");
+      return Failure("Unknown error while removing language");
     } catch (e) {
-      return FailureResponse("Failed to remove language: $e");
+      return Failure("Failed to remove language: $e");
     }
   }
 }

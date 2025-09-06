@@ -25,7 +25,8 @@ class BookedDatesRepository {
   });
 
   /// Fetch schedules for a student and language (one-time)
-  Future<Response> getSchedulesOnce(String studentId, String language) async {
+  Future<DataResponse> getSchedulesOnce(
+      String studentId, String language) async {
     try {
       // Firestore one-time fetch
       final snapshot = await firestore
@@ -47,19 +48,19 @@ class BookedDatesRepository {
       //   await localDs.saveBooking(s.toMap());
       // }
 
-      return SuccessResponse(schedules);
+      return Success(schedules);
     } on FirebaseException catch (e) {
       // Fallback to local cache
       final localSchedules = await localDs.getBookings(
           userId: studentId, language: language, userType: 'Student');
 
       if (localSchedules.isNotEmpty) {
-        return SuccessResponse(localSchedules);
+        return Success(localSchedules);
       } else {
-        return FailureResponse("Failed to fetch schedules: ${e.message}");
+        return Failure("Failed to fetch schedules: ${e.message}");
       }
     } catch (e) {
-      return FailureResponse("Unexpected error: $e");
+      return Failure("Unexpected error: $e");
     }
   }
 }

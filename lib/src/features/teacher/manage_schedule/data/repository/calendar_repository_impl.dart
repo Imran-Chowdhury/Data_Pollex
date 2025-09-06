@@ -22,7 +22,7 @@ class ScheduleRepository {
   Future<List<Appointment>> getSchedules(String teacherId) async {
     final response = await remote.fetchSchedules(teacherId);
 
-    if (response is SuccessResponse<List<Map<String, dynamic>>>) {
+    if (response is Success<List<Map<String, dynamic>>>) {
       final data = response.data;
       final appointments = _mapToAppointments(data);
 
@@ -30,7 +30,7 @@ class ScheduleRepository {
       await localDB.saveSchedules(data);
 
       return appointments;
-    } else if (response is FailureResponse) {
+    } else if (response is Failure) {
       // fallback to local if Firestore fails
       final localData = await localDB.getSchedules();
       if (localData != null) {
@@ -42,25 +42,25 @@ class ScheduleRepository {
     return [];
   }
 
-  Future<Response<void>> addSchedule(
+  Future<DataResponse<void>> addSchedule(
     Map<String, dynamic> schedule,
   ) async {
     final response = await remote.addSchedule(schedule);
 
-    if (response is SuccessResponse<void>) {
+    if (response is Success<void>) {
       // Refresh cache only if remote succeeded
       final fetchResponse = await remote.fetchSchedules(schedule['teacherId']);
 
-      if (fetchResponse is SuccessResponse<List<Map<String, dynamic>>>) {
+      if (fetchResponse is Success<List<Map<String, dynamic>>>) {
         await localDB.saveSchedules(fetchResponse.data);
       }
 
-      return SuccessResponse(null);
-    } else if (response is FailureResponse) {
-      return FailureResponse(response.message, statusCode: response.statusCode);
+      return Success(null);
+    } else if (response is Failure) {
+      return Failure(response.message, statusCode: response.statusCode);
     }
 
-    return FailureResponse("Unknown error occurred");
+    return Failure("Unknown error occurred");
   }
 
   /// Convert raw data into calendar appointments

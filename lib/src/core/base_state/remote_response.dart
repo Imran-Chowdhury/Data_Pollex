@@ -1,12 +1,12 @@
-abstract class Response<T> {}
+abstract class DataResponse<T> {}
 
-class SuccessResponse<T> extends Response<T> {
+class Success<T> extends DataResponse<T> {
   final T data;
-  SuccessResponse(this.data);
+  Success(this.data);
 }
 
-class FailureResponse<T> extends Response<T> {
+class Failure<T> extends DataResponse<T> {
   final String message;
   final int? statusCode;
-  FailureResponse(this.message, {this.statusCode});
+  Failure(this.message, {this.statusCode});
 }

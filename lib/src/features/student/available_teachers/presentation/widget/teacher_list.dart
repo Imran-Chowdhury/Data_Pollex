@@ -1,7 +1,7 @@
+import 'package:data_pollex/src/features/student/teacher_date/presentation/screens/teacher_dates_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../teacher_date/presentation/screens/teacher_dates_screen.dart';
 import '../provider/teacher_by_lang_provider.dart';
 
 class TeacherList extends ConsumerWidget {

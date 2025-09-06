@@ -30,10 +30,10 @@ final bookedSchedulesProvider = FutureProvider.autoDispose
   final response =
       await repository.getSchedulesOnce(params.studentId, params.language);
 
-  if (response is SuccessResponse) {
+  if (response is Success) {
     log('The response is $response');
     return response.data;
-  } else if (response is FailureResponse) {
+  } else if (response is Failure) {
     log('Failure response');
     throw Exception(response.message);
   }

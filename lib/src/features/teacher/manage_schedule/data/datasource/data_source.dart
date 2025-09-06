@@ -10,7 +10,7 @@ final calendarRemoteProvider = Provider((ref) {
 class CalendarRemoteDataSource {
   final _firestore = FirebaseFirestore.instance;
 
-  Future<Response<List<Map<String, dynamic>>>> fetchSchedules(
+  Future<DataResponse<List<Map<String, dynamic>>>> fetchSchedules(
       String teacherId) async {
     try {
       final snapshot = await _firestore
@@ -18,13 +18,13 @@ class CalendarRemoteDataSource {
           .where('teacherId', isEqualTo: teacherId)
           .get();
       final schedules = snapshot.docs.map((doc) => doc.data()).toList();
-      return SuccessResponse(schedules);
+      return Success(schedules);
     } catch (e) {
-      return FailureResponse("Failed to fetch schedules: $e");
+      return Failure("Failed to fetch schedules: $e");
     }
   }
 
-  Future<Response<void>> addSchedule(Map<String, dynamic> schedule) async {
+  Future<DataResponse<void>> addSchedule(Map<String, dynamic> schedule) async {
     try {
       final String language = schedule['language'];
       final String date = schedule['date']; // make sure you store consistently
@@ -37,15 +37,15 @@ class CalendarRemoteDataSource {
 
       if (query.docs.isEmpty) {
         await _firestore.collection('schedules').add(schedule);
-        return SuccessResponse(null);
+        return Success(null);
       } else {
-        return FailureResponse(
+        return Failure(
           'Schedule for $language on $date already exists.',
           statusCode: 409, // conflict
         );
       }
     } catch (e) {
-      return FailureResponse("Failed to add schedule: $e");
+      return Failure("Failed to add schedule: $e");
     }
   }
 }

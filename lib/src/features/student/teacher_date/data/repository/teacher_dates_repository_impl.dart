@@ -45,7 +45,7 @@ class TeacherDatesRepository {
   }
 
   /// Book a schedule
-  Future<Response> bookSchedule(
+  Future<DataResponse> bookSchedule(
       Schedule schedule, String studentName, String studentId) async {
     try {
       await firestore.collection("schedules").doc(schedule.id).update({
@@ -70,13 +70,13 @@ class TeacherDatesRepository {
           schedules: [schedule],
           userType: 'Student');
       log('The repo try block has executed');
-      return SuccessResponse(true);
+      return Success(true);
     } on FirebaseException catch (e) {
       log('The repo firebase exception block has executed');
-      return FailureResponse('Failed to book schedule');
+      return Failure('Failed to book schedule');
     } catch (e) {
       log('The repo catch block has executed');
-      return FailureResponse("Unexpected error while booking schedule: $e");
+      return Failure("Unexpected error while booking schedule: $e");
     }
   }
 }

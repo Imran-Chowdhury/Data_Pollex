@@ -5,12 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../view_model/booked_lesson_view_model.dart';
 
 class TeacherBookedLessonScreen extends ConsumerWidget {
-  // final String studentId;
   final String language;
 
   const TeacherBookedLessonScreen({
     super.key,
-    // required this.studentId,
     required this.language,
   });
 
@@ -49,7 +47,9 @@ class TeacherBookedLessonScreen extends ConsumerWidget {
             },
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
         error: (e, _) => Center(
           child: Text(
             'Error loading schedules: $e',

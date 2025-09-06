@@ -10,20 +10,20 @@ class FirebaseAuthDataSource {
 
   FirebaseAuthDataSource(this._auth, this._firestore);
 
-  Future<Response<UserModel?>> signIn(String email, String password) async {
+  Future<DataResponse<UserModel?>> signIn(String email, String password) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       final user = await _userFromFirebase(credential.user);
-      return SuccessResponse(user);
+      return Success(user);
     } catch (e) {
-      return FailureResponse(e.toString());
+      return Failure(e.toString());
     }
   }
 
-  Future<Response<UserModel?>> signUp(
+  Future<DataResponse<UserModel?>> signUp(
     String name,
     String email,
     String password,
@@ -46,30 +46,30 @@ class FirebaseAuthDataSource {
             .collection("users")
             .doc(user.uid)
             .set(userModel.toMap());
-        return SuccessResponse(userModel);
+        return Success(userModel);
       }
-      return FailureResponse("User creation failed");
+      return Failure("User creation failed");
     } catch (e) {
-      return FailureResponse(e.toString());
+      return Failure(e.toString());
     }
   }
 
-  Future<Response<void>> signOut() async {
+  Future<DataResponse<void>> signOut() async {
     try {
       await _auth.signOut();
-      return SuccessResponse(null);
+      return Success(null);
     } catch (e) {
-      return FailureResponse(e.toString());
+      return Failure(e.toString());
     }
   }
 
-  Stream<Response<UserModel?>> authStateChanges() {
+  Stream<DataResponse<UserModel?>> authStateChanges() {
     return _auth.authStateChanges().asyncMap((user) async {
       try {
         final userModel = await _userFromFirebase(user);
-        return SuccessResponse(userModel);
+        return Success(userModel);
       } catch (e) {
-        return FailureResponse(e.toString());
+        return Failure(e.toString());
       }
     });
   }

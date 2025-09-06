@@ -12,7 +12,7 @@ final manageLessonRepoProvider = Provider((ref) {
 });
 
 abstract class ManageLessonsRepository {
-  Future<Response<List<String>>> fetchLanguages(String teacherId);
-  Future<Response<void>> addLanguage(String teacherId, String language);
-  Future<Response<void>> removeLanguage(String teacherId, String language);
+  Future<DataResponse<List<String>>> fetchLanguages(String teacherId);
+  Future<DataResponse<void>> addLanguage(String teacherId, String language);
+  Future<DataResponse<void>> removeLanguage(String teacherId, String language);
 }

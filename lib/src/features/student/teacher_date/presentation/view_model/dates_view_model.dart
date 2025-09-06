@@ -33,9 +33,9 @@ class BookingController extends AutoDisposeAsyncNotifier<void> {
     try {
       final res =
           await repository.bookSchedule(schedule, studentName, studentId);
-      if (res is SuccessResponse) {
+      if (res is Success) {
         state = const AsyncData(null);
-      } else if (res is FailureResponse) {
+      } else if (res is Failure) {
         state = AsyncError(res.message, StackTrace.current);
       }
     } catch (e, st) {

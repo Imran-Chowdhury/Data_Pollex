@@ -15,24 +15,25 @@ class ManageLessonsRemoteDataSource {
 
   ManageLessonsRemoteDataSource(this.auth, this._db);
 
-  Future<Response<List<String>>> fetchLanguages(String teacherId) async {
+  Future<DataResponse<List<String>>> fetchLanguages(String teacherId) async {
     try {
       final doc =
           await _db.collection("teachers_languages").doc(teacherId).get();
-      if (!doc.exists) return SuccessResponse([]);
+      if (!doc.exists) return Success([]);
 
       final data = doc.data();
       final langs = data != null && data["languages"] != null
           ? List<String>.from(data["languages"])
           : <String>[];
 
-      return SuccessResponse(langs);
+      return Success(langs);
     } catch (e) {
-      return FailureResponse("Failed to fetch languages: $e");
+      return Failure("Failed to fetch languages: $e");
     }
   }
 
-  Future<Response<void>> addLanguage(String teacherId, String language) async {
+  Future<DataResponse<void>> addLanguage(
+      String teacherId, String language) async {
     try {
       final docRef = _db.collection("teachers_languages").doc(teacherId);
 
@@ -46,7 +47,7 @@ class ManageLessonsRemoteDataSource {
             : <String>[];
 
         if (languages.contains(language)) {
-          return FailureResponse("This language is already present");
+          return Failure("This language is already present");
         }
       }
 
@@ -58,13 +59,13 @@ class ManageLessonsRemoteDataSource {
         SetOptions(merge: true),
       );
 
-      return SuccessResponse(null);
+      return Success(null);
     } catch (e) {
-      return FailureResponse("Failed to add language: $e");
+      return Failure("Failed to add language: $e");
     }
   }
 
-  Future<Response<void>> removeLanguage(
+  Future<DataResponse<void>> removeLanguage(
       String teacherId, String language) async {
     try {
       final docRef = _db.collection("teachers_languages").doc(teacherId);
@@ -73,9 +74,9 @@ class ManageLessonsRemoteDataSource {
         "languages": FieldValue.arrayRemove([language])
       });
 
-      return SuccessResponse(null);
+      return Success(null);
     } catch (e) {
-      return FailureResponse("Failed to remove language: $e");
+      return Failure("Failed to remove language: $e");
     }
   }
 }

@@ -21,9 +21,9 @@ class ManageLessonsViewModel extends AutoDisposeAsyncNotifier<List<String>> {
     try {
       final res = await _repo.fetchLanguages(teacherId);
 
-      if (res is SuccessResponse<List<String>>) {
+      if (res is Success<List<String>>) {
         return res.data;
-      } else if (res is FailureResponse<List<String>>) {
+      } else if (res is Failure<List<String>>) {
         // Return empty list on failure
         return [];
       } else {
@@ -40,14 +40,14 @@ class ManageLessonsViewModel extends AutoDisposeAsyncNotifier<List<String>> {
 
     final res = await _repo.addLanguage(teacherId, language);
 
-    if (res is FailureResponse) {
+    if (res is Failure) {
       state = AsyncValue.error(res.message, StackTrace.current);
-    } else if (res is SuccessResponse<void>) {
+    } else if (res is Success<void>) {
       // Refresh list after successful add
       final refreshed = await _repo.fetchLanguages(teacherId);
-      if (refreshed is SuccessResponse<List<String>>) {
+      if (refreshed is Success<List<String>>) {
         state = AsyncValue.data(refreshed.data);
-      } else if (refreshed is FailureResponse<List<String>>) {
+      } else if (refreshed is Failure<List<String>>) {
         state = AsyncValue.error(refreshed.message, StackTrace.current);
       } else {
         state = AsyncValue.error("Unknown error", StackTrace.current);
@@ -60,14 +60,14 @@ class ManageLessonsViewModel extends AutoDisposeAsyncNotifier<List<String>> {
 
     final res = await _repo.removeLanguage(teacherId, language);
 
-    if (res is FailureResponse) {
+    if (res is Failure) {
       state = AsyncValue.error(res.message, StackTrace.current);
-    } else if (res is SuccessResponse<void>) {
+    } else if (res is Success<void>) {
       // Refresh list after removal
       final refreshed = await _repo.fetchLanguages(teacherId);
-      if (refreshed is SuccessResponse<List<String>>) {
+      if (refreshed is Success<List<String>>) {
         state = AsyncValue.data(refreshed.data);
-      } else if (refreshed is FailureResponse<List<String>>) {
+      } else if (refreshed is Failure<List<String>>) {
         state = AsyncValue.error(refreshed.message, StackTrace.current);
       } else {
         state = AsyncValue.error("Unknown error", StackTrace.current);
