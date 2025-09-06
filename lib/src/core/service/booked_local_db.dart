@@ -11,17 +11,22 @@ final localBookingDsProvider = Provider((ref) {
 });
 
 class LocalScheduleDataSource {
-  static const _bookedSchedulesKey = 'booked_schedules';
+  static const _studentKey = 'student_booked_schedules';
+  static const _teacherKey = 'teacher_booked_schedules';
+
+  // static const _bookedSchedulesKey = 'booked_schedules';
 
   /// Save or replace all schedules for a specific language
   Future<void> saveBooking({
     required String language,
     required List<Schedule> schedules,
+    required String userType,
   }) async {
     final prefs = await SharedPreferences.getInstance();
 
     // Load existing map (language -> list of schedules)
-    final existingJson = prefs.getString(_bookedSchedulesKey);
+    final existingJson =
+        prefs.getString(userType == 'Teacher' ? _teacherKey : _studentKey);
     Map<String, dynamic> map = existingJson != null
         ? jsonDecode(existingJson) as Map<String, dynamic>
         : {};
@@ -29,17 +34,20 @@ class LocalScheduleDataSource {
     // Replace the list for this language
     map[language] = schedules.map((s) => s.toMap()).toList();
 
-    await prefs.setString(_bookedSchedulesKey, jsonEncode(map));
+    await prefs.setString(
+        userType == 'Teacher' ? _teacherKey : _studentKey, jsonEncode(map));
     log('Local cache after save: $map');
   }
 
   /// Get schedules for a student and language
   Future<List<Schedule>> getBookings({
-    required String studentId,
+    required String userId,
     required String language,
+    required String userType,
   }) async {
     final prefs = await SharedPreferences.getInstance();
-    final existingJson = prefs.getString(_bookedSchedulesKey);
+    final existingJson =
+        prefs.getString(userType == 'Teacher' ? _teacherKey : _studentKey);
     if (existingJson == null) return [];
 
     final map = jsonDecode(existingJson) as Map<String, dynamic>;
@@ -50,43 +58,14 @@ class LocalScheduleDataSource {
     final schedules =
         list.map((e) => Schedule.fromMap(e as Map<String, dynamic>)).toList();
 
-    return schedules.where((s) => s.studentId == studentId).toList();
+    return userType == 'Teacher'
+        ? schedules.where((s) => s.teacherId == userId).toList()
+        : schedules.where((s) => s.studentId == userId).toList();
   }
 
-  /// Clear all cached schedules
-  Future<void> clearBookings() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_bookedSchedulesKey);
-  }
+  // /// Clear all cached schedules
+  // Future<void> clearBookings() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.remove(_studentKey);
+  // }
 }
-
-// class LocalScheduleDataSource {
-//   static const _bookedSchedulesKey = 'booked_schedules';
-//
-//   Future<void> saveBooking(Map<String, dynamic> booking) async {
-//     final prefs = await SharedPreferences.getInstance();
-//     final existing = prefs.getStringList(_bookedSchedulesKey) ?? [];
-//     existing.add(jsonEncode(booking));
-//     log('local data is $existing');
-//     await prefs.setStringList(_bookedSchedulesKey, existing);
-//   }
-//
-//   Future<List<Schedule>> getBookings({
-//     required String studentId,
-//     required String language,
-//   }) async {
-//     final prefs = await SharedPreferences.getInstance();
-//     final existing = prefs.getStringList(_bookedSchedulesKey) ?? [];
-//     final decoded =
-//         existing.map((e) => Schedule.fromMap(jsonDecode(e))).toList();
-//
-//     return decoded
-//         .where((s) => s.studentId == studentId && s.language == language)
-//         .toList();
-//   }
-//
-//   Future<void> clearBookings() async {
-//     final prefs = await SharedPreferences.getInstance();
-//     await prefs.remove(_bookedSchedulesKey);
-//   }
-// }

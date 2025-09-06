@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../booked_lessons/presentation/screens/teacher_booked_lesson_screen.dart';
 import '../view_model/manage_lesson_view_model.dart';
 import '../widgets/add_language_dialog.dart';
 
@@ -42,8 +43,20 @@ class LessonList extends ConsumerWidget {
       itemCount: state.valueOrNull?.length ?? 0,
       itemBuilder: (context, i) {
         final langs = state.valueOrNull!;
-        return Card(
-          child: ListTile(title: Text(langs[i])),
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TeacherBookedLessonScreen(
+                  language: langs[i],
+                ),
+              ),
+            );
+          },
+          child: Card(
+            child: ListTile(title: Text(langs[i])),
+          ),
         );
       },
     );

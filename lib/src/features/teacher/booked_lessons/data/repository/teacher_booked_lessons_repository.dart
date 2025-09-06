@@ -6,31 +6,31 @@ import 'package:data_pollex/src/core/riverpod/firestore_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/service/booked_local_db.dart';
-import '../../../teacher_date/data/model/schedule_model.dart';
+import '../../../../student/teacher_date/data/model/schedule_model.dart';
 
-final bookedLessonRepoProvider = Provider((ref) {
-  return BookedDatesRepository(
+final teacherBookedLessonRepoProvider = Provider((ref) {
+  return TeacherBookedDatesRepository(
     firestore: ref.read(fireStoreProvider),
     localDs: ref.read(localBookingDsProvider),
   );
 });
 
-class BookedDatesRepository {
+class TeacherBookedDatesRepository {
   final FirebaseFirestore firestore;
   final LocalScheduleDataSource localDs;
 
-  BookedDatesRepository({
+  TeacherBookedDatesRepository({
     required this.firestore,
     required this.localDs,
   });
 
   /// Fetch schedules for a student and language (one-time)
-  Future<Response> getSchedulesOnce(String studentId, String language) async {
+  Future<Response> getSchedulesOnce(String teacherId, String language) async {
     try {
       // Firestore one-time fetch
       final snapshot = await firestore
           .collection("schedules")
-          .where("studentId", isEqualTo: studentId)
+          .where("teacherId", isEqualTo: teacherId)
           .where("language", isEqualTo: language)
           .where("isBooked", isEqualTo: true)
           .get();
@@ -42,7 +42,7 @@ class BookedDatesRepository {
 
       // Cache locally
       localDs.saveBooking(
-          language: language, schedules: schedules, userType: 'Student');
+          language: language, schedules: schedules, userType: 'Teacher');
       // for (final s in schedules) {
       //   await localDs.saveBooking(s.toMap());
       // }
@@ -51,7 +51,7 @@ class BookedDatesRepository {
     } on FirebaseException catch (e) {
       // Fallback to local cache
       final localSchedules = await localDs.getBookings(
-          userId: studentId, language: language, userType: 'Student');
+          userId: teacherId, language: language, userType: 'Teacher');
 
       if (localSchedules.isNotEmpty) {
         return SuccessResponse(localSchedules);

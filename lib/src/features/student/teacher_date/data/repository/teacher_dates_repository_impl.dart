@@ -66,9 +66,9 @@ class TeacherDatesRepository {
       // });
 
       await localDataSource.saveBooking(
-        language: schedule.language,
-        schedules: [schedule],
-      );
+          language: schedule.language,
+          schedules: [schedule],
+          userType: 'Student');
       log('The repo try block has executed');
       return SuccessResponse(true);
     } on FirebaseException catch (e) {
