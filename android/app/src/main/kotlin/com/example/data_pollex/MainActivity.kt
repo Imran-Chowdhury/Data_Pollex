@@ -1,5 +1,12 @@
+//package com.example.data_pollex
+//
+//import io.flutter.embedding.android.FlutterActivity
+//
+//class MainActivity: FlutterActivity()
 package com.example.data_pollex
 
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity: FlutterFragmentActivity() {
+}
