@@ -1,4 +1,5 @@
 import 'package:data_pollex/src/features/auth/presentation/providers/auth_providers.dart';
+import 'package:data_pollex/src/features/video_call/presentation/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,15 +36,30 @@ class BookedSchedulesScreen extends ConsumerWidget {
             itemCount: schedules.length,
             itemBuilder: (context, index) {
               final schedule = schedules[index];
-              return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: ListTile(
-                  title: Text(schedule.date),
-                  subtitle: Text(
-                      'Student: ${schedule.studentName ?? 'N/A'}\nTeacher: ${schedule.teacherName}'),
-                  trailing: schedule.isBooked
-                      ? const Icon(Icons.check_circle, color: Colors.green)
-                      : const Icon(Icons.pending, color: Colors.grey),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChatScreen(
+                        userName: schedule.studentName,
+                        chatWithName: schedule.teacherName,
+                        scheduleId: schedule.id,
+                      ),
+                    ),
+                  );
+                },
+                child: Card(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: ListTile(
+                    title: Text(schedule.date),
+                    subtitle: Text(
+                        'Student: ${schedule.studentName ?? 'N/A'}\nTeacher: ${schedule.teacherName}'),
+                    trailing: schedule.isBooked
+                        ? const Icon(Icons.check_circle, color: Colors.green)
+                        : const Icon(Icons.pending, color: Colors.grey),
+                  ),
                 ),
               );
             },

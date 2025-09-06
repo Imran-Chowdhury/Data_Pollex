@@ -14,21 +14,24 @@ class NameRow extends ConsumerWidget {
     final authState = ref.watch(authViewModelProvider).user;
 
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Hi',
+                'Hi,',
                 style: TextStyle(
                   fontSize: 30,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              const SizedBox(
+                width: 10,
               ),
               Text(
                 authState!.name,
@@ -40,25 +43,25 @@ class NameRow extends ConsumerWidget {
               ),
             ],
           ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 8,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(10),
-            child: const Icon(
-              Icons.person,
-              size: 35,
-              color: Colors.deepPurple,
-            ),
-          ),
+          // Container(
+          //   decoration: const BoxDecoration(
+          //     color: Colors.white,
+          //     shape: BoxShape.circle,
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: Colors.black26,
+          //         blurRadius: 8,
+          //         offset: Offset(0, 4),
+          //       ),
+          //     ],
+          //   ),
+          //   padding: const EdgeInsets.all(10),
+          //   child: const Icon(
+          //     Icons.person,
+          //     size: 35,
+          //     color: Colors.deepPurple,
+          //   ),
+          // ),
           const SizedBox(
             width: 10,
           ),

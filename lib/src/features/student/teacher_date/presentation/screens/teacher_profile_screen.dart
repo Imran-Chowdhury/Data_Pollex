@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../auth/presentation/providers/auth_providers.dart';
 import '../../../../stripe/presentation/view_model/stripe_view_model.dart';
-import '../../../../video_call/presentation/screens/signup_screen.dart';
+import '../../../../video_call/presentation/screens/chat_screen.dart';
 
 class TeacherProfileScreen extends ConsumerWidget {
   final String teacherName;
@@ -32,11 +32,15 @@ class TeacherProfileScreen extends ConsumerWidget {
       }
       if (next is PaymentSuccess) {
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const ChatScreen(
-                      chatWithName: '',
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              userName: schedule.teacherName,
+              chatWithName: schedule.studentName,
+              scheduleId: schedule.id,
+            ),
+          ),
+        );
       }
     });
 

@@ -47,3 +47,103 @@ class TeacherDashboardTile extends StatelessWidget {
     );
   }
 }
+
+class LessonCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const LessonCard({super.key, required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Container(
+            width: 300,
+            height: 150,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF407c7a), // coral
+                  Colors.grey // peach
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(.1),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Icon(
+                    icon,
+                    size: 50,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 60.0),
+        //   child: Container(
+        //     width: 280,
+        //     height: 200,
+        //     padding: const EdgeInsets.all(16),
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(20),
+        //       gradient: const LinearGradient(
+        //         colors: [
+        //           Color(0xFFFD746C), // coral
+        //           Color(0xFFFF9068), // peach
+        //         ],
+        //         begin: Alignment.topLeft,
+        //         end: Alignment.bottomRight,
+        //       ),
+        //       boxShadow: [
+        //         BoxShadow(
+        //           color: Colors.black.withOpacity(.1),
+        //           blurRadius: 12,
+        //           offset: const Offset(0, 6),
+        //         ),
+        //       ],
+        //     ),
+        //     child: Align(
+        //       alignment: Alignment.centerLeft,
+        //       child: Text(
+        //         title,
+        //         style: const TextStyle(
+        //           color: Colors.white,
+        //           fontSize: 20,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+      ],
+    );
+  }
+}

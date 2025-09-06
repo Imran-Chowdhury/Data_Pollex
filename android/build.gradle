@@ -2,7 +2,15 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+//        maven { url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases" }
     }
+
+//    configurations.all {
+//        resolutionStrategy {
+//            // this replaces the old "force = true" usage
+//            force "com.facebook.react:react-android:0.71.3"
+//        }
+//    }
 }
 
 rootProject.buildDir = "../build"

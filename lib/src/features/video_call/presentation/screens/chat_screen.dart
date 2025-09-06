@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
   final String chatWithName;
+  final String scheduleId;
+  final String userName;
 
   const ChatScreen({
     super.key,
     required this.chatWithName,
+    required this.scheduleId,
+    required this.userName,
   });
 
   @override
@@ -20,12 +24,15 @@ class ChatScreen extends StatelessWidget {
             icon: const Icon(Icons.videocam),
             onPressed: () {
               // Navigate to video call screen
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const VideoCallScreen(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (_) => MeetingScreen(
+              //       scheduleId: scheduleId,
+              //       displayName: userName,
+              //     ),
+              //   ),
+              // );
             },
           ),
         ],
@@ -99,17 +106,17 @@ class ChatScreen extends StatelessWidget {
   }
 }
 
-/// Dummy Video Call Screen
-class VideoCallScreen extends StatelessWidget {
-  const VideoCallScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Video Call")),
-      body: const Center(
-        child: Text("Video call in progress..."),
-      ),
-    );
-  }
-}
+// /// Dummy Video Call Screen
+// class VideoCallScreen extends StatelessWidget {
+//   const VideoCallScreen({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text("Video Call")),
+//       body: const Center(
+//         child: Text("Video call in progress..."),
+//       ),
+//     );
+//   }
+// }
