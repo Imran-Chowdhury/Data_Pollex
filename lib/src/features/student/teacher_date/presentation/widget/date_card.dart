@@ -10,17 +10,10 @@ import '../../data/model/schedule_model.dart';
 
 class DateCard extends ConsumerWidget {
   final String date;
-  // final String userName;
-  // final String userId;
+
   final Schedule schedule;
 
-  const DateCard(
-      {super.key,
-      required this.date,
-      // required this.userName,
-      // required this.userId,
-      required this.schedule,
-      re});
+  const DateCard({super.key, required this.date, required this.schedule, re});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,13 +37,6 @@ class DateCard extends ConsumerWidget {
               userName: studentAuth.user!.name,
               userId: studentAuth.user!.id,
             ),
-
-            //     ChatScreen(
-            //   userId: schedule.teacherId,
-            //   userName: schedule.teacherName,
-            //   chatWithName: schedule.studentName,
-            //   scheduleId: schedule.id,
-            // ),
           ),
         );
       }
@@ -93,12 +79,6 @@ class DateCard extends ConsumerWidget {
             paymentState is PaymentLoading
                 ? const CircularProgressIndicator()
                 : TextButton(
-                    // onPressed: () {
-                    //   // Define your booking logic here
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     const SnackBar(content: Text("Booking confirmed!")),
-                    //   );
-                    // },
                     onPressed: () {
                       final studentName =
                           ref.read(authViewModelProvider).user!.name;

@@ -48,37 +48,6 @@ class TeacherDatesList extends ConsumerWidget {
               schedule: schedule,
               // userId: schedule.studentId,
             );
-
-            // return ListTile(
-            //   title: Text(schedule.date),
-            //   subtitle: Text(schedule.teacherName + schedule.language),
-            //   trailing: ElevatedButton(
-            //     child: const Text("Book"),
-            //     onPressed: () {
-            //       // Navigate to teacher profile
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (_) => TeacherProfileScreen(
-            //             teacherName: schedule.teacherName,
-            //             schedule: schedule,
-            //             // onBook: () {
-            //             //   final studentName =
-            //             //       ref.read(authViewModelProvider).user!.name;
-            //             //   final studentId =
-            //             //       ref.read(authViewModelProvider).user!.id;
-            //             //
-            //             //   ref.read(paymentNotifierProvider.notifier).makePayment(schedule, studentName, studentId);
-            //             //   // ref
-            //             //   //     .read(bookingControllerProvider.notifier)
-            //             //   //     .bookSchedule(schedule, studentName, studentId);
-            //             // },
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // );
           },
         );
       },

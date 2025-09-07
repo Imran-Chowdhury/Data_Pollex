@@ -29,41 +29,6 @@ class CalendarSetButton extends StatelessWidget {
   }
 }
 
-// class CalendarSetButton extends StatelessWidget {
-//   const CalendarSetButton({super.key, required this.selectedDate});
-//
-//   final DateTime selectedDate;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ElevatedButton(
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: CustomColor.primary,
-//         foregroundColor: Colors.white,
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(12),
-//         ),
-//         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-//         elevation: 4,
-//       ),
-//       onPressed: () {
-//         Navigator.of(context).pop();
-//         addBooking(context, selectedDate);
-//       },
-//       child: const Text('Set Date'),
-//     );
-//   }
-//
-//   void addBooking(BuildContext context, DateTime selectedDate) {
-//     showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AddBookingDialogWidget(selectedDate: selectedDate);
-//       },
-//     );
-//   }
-// }
-
 class CalendarCancelButton extends StatelessWidget {
   const CalendarCancelButton({
     super.key,

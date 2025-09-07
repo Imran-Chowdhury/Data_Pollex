@@ -55,34 +55,4 @@ class StripeUseCase {
       return Failure('Unexpected error: $e');
     }
   }
-
-// Future<DataResponse> makePayment(
-  //     Schedule schedule, String studentName, String studentId) async {
-  //   final paymentRes =
-  //       stripeRepository.createPaymentIntent(amount: '100', currency: 'USD');
-  //
-  //   if (paymentRes is Success) {
-  //     await Stripe.instance.initPaymentSheet(
-  //       paymentSheetParameters: SetupPaymentSheetParameters(
-  //         paymentIntentClientSecret: paymentRes.data['client_secret'],
-  //         merchantDisplayName: 'Flutterwings',
-  //       ),
-  //     );
-  //
-  //     await Stripe.instance.presentPaymentSheet();
-  //     final bookingRes = await teacherDatesRepository.bookSchedule(
-  //         schedule, studentName, studentId);
-  //     if (bookingRes is Success) {
-  //       return Success(null);
-  //     } else if (bookingRes is Failure) {
-  //       return bookingRes;
-  //     } else {
-  //       return Failure('Failed to book');
-  //     }
-  //   } else if (paymentRes is Failure) {
-  //     return paymentRes;
-  //   } else {
-  //     return Failure('Failed to pay');
-  //   }
-  // }
 }

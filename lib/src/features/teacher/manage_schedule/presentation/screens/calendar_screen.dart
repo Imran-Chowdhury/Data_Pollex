@@ -11,7 +11,6 @@ class CalendarScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final lesson = ref.watch(manageLessonsProvider);
     final schedules = ref.watch(scheduleControllerProvider).valueOrNull;
     final CalendarView calendarView = CalendarView.month;
 
@@ -43,12 +42,6 @@ class CalendarScreen extends ConsumerWidget {
           view: calendarView,
           showDatePickerButton: true,
           initialSelectedDate: DateTime.now(),
-          // onTap: (CalendarTapDetails details) {
-          //   if (details.date != null) {
-          //     final DateTime selectedDate = details.date!;
-          //     showBookings(context, selectedDate);
-          //   }
-          // },
 
           onTap: (CalendarTapDetails details) {
             if (details.targetElement == CalendarElement.calendarCell &&

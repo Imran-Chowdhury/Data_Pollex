@@ -88,27 +88,6 @@ class LessonSelectorState extends State<LessonSelector> {
             ],
           ),
         ),
-        // const SizedBox(height: 16),
-        // Align(
-        //   alignment: Alignment.centerRight,
-        //   child: TextButton(
-        //     onPressed: () async {
-        //       if (selectedLanguage != null) {
-        //         await ref
-        //             .read(scheduleControllerProvider.notifier)
-        //             .addSchedule({
-        //           "language": selectedLanguage,
-        //           "teacherId": ref.read(authViewModelProvider).user!.id,
-        //           "teacherName": ref.read(authViewModelProvider).user!.name,
-        //           "date": widget.selectedDate.toIso8601String(),
-        //           "isBooked": false,
-        //         });
-        //       }
-        //       Navigator.of(context).pop();
-        //     },
-        //     child: const Text('Add'),
-        //   ),
-        // ),
       ],
     );
   }

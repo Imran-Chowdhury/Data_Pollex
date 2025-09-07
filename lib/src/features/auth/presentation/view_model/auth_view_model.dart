@@ -8,10 +8,6 @@ import '../../domain/repository/auth_repository.dart';
 class AuthViewModel extends StateNotifier<AuthState> {
   final AuthRepository repository;
 
-  // AuthViewModel({required this.repository}) : super(const AuthState()) {
-  //   _watchAuthState();
-  // }
-
   AuthViewModel({required this.repository}) : super(const AuthState()) {
     _init();
   }

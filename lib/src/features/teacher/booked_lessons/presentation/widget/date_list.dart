@@ -40,13 +40,6 @@ class DateList extends ConsumerWidget {
                       userName: schedule.teacherName,
                       userId: schedule.teacherId,
                     ),
-
-                    //     ChatScreen(
-                    //   chatWithName: schedule.studentName,
-                    //   scheduleId: schedule.id,
-                    //   userName: schedule.teacherName,
-                    //   userId: schedule.teacherId,
-                    // ),
                   ),
                 );
               },

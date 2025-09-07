@@ -22,21 +22,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   TextEditingController confirmPasswordController = TextEditingController();
   final ValueNotifier<String> _roleNotifier = ValueNotifier(Role.teacher);
 
-  // void signUp() async {
-  //   if (_formKey.currentState!.validate()) {
-  //     await ref.read(authViewModelProvider.notifier).signUp(
-  //           nameController.text.trim(),
-  //           emailController.text.trim(),
-  //           passwordController.text.trim(),
-  //           confirmPasswordController.text.trim(),
-  //           _roleNotifier.value,
-  //         );
-  //   }
-  //   final String? error = ref.read(authViewModelProvider).error;
-  //   if (error == null) {
-  //     Navigator.pop(context);
-  //   }
-  // }
   void signUp() async {
     if (_formKey.currentState!.validate()) {
       // If the form is valid, proceed with the sign-up
@@ -59,20 +44,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       }
     }
   }
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //
-  //   ref.listenManual(authViewModelProvider, (prev, next) {
-  //     if (next.error != null) {
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //         content: Text(next.error!),
-  //       ));
-  //     }
-  //   });
-  // }
 
   @override
   void dispose() {

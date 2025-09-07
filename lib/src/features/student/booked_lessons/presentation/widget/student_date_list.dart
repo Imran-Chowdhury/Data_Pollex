@@ -39,15 +39,7 @@ class StudentDateList extends ConsumerWidget {
                             scheduleId: schedule.id,
                             userName: schedule.studentName,
                             userId: schedule.studentId,
-                          )
-
-                      //     ChatScreen(
-                      //   chatWithName: schedule.teacherName,
-                      //   scheduleId: schedule.id,
-                      //   userName: schedule.studentName,
-                      //   userId: schedule.studentId,
-                      // ),
-                      ),
+                          )),
                 );
               },
               child: CustomCard(

@@ -75,34 +75,3 @@ class ManageLessonsViewModel extends AutoDisposeAsyncNotifier<List<String>> {
     }
   }
 }
-
-// class ManageLessonsViewModel extends AsyncNotifier<List<TeacherLanguage>> {
-//   late final ManageLessonsRepository _repo;
-//
-//   @override
-//   Future<List<TeacherLanguage>> build() async {
-//     _repo = ref.read(manageLessonRepoProvider);
-//     final teacherId = ref.read(authViewModelProvider).user!.id;
-//
-//     final res = await _repo.fetchLanguages(teacherId);
-//     if (res is RemoteSuccess<List<TeacherLanguage>>) {
-//       return res.data;
-//     } else {
-//       throw Exception((res as RemoteFailure).message);
-//     }
-//   }
-//
-//   Future<void> addLanguage(String teacherId, String language) async {
-//     final res = await _repo.addLanguage(teacherId, language);
-//
-//     if (res is RemoteFailure) {
-//       state = AsyncError(res.message, StackTrace.current);
-//     } else {
-//       // Refresh list
-//       final refreshed = await _repo.fetchLanguages(teacherId);
-//       if (refreshed is RemoteSuccess<List<TeacherLanguage>>) {
-//         state = AsyncData(refreshed.data);
-//       }
-//     }
-//   }
-// }

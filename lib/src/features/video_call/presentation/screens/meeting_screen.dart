@@ -21,12 +21,6 @@ class VideoCallPage extends StatelessWidget {
       appSign: CallInfo.appSign,
       callID: scheduleId,
       userID: userId,
-      // config: ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall()
-      // ..audioConfig = ZegoAudioConfig(
-      //   enableAEC: true,  // Enable echo cancellation
-      //   enableAGC: true,  // Automatic gain control
-      //   enableNS: true,   // Noise suppression
-      // ),
       config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
     );
   }
