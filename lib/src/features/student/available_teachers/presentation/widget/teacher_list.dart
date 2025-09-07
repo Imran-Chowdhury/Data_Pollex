@@ -1,3 +1,4 @@
+import 'package:data_pollex/src/core/utils/color.dart';
 import 'package:data_pollex/src/features/student/available_teachers/presentation/widget/teacher_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +17,11 @@ class TeacherList extends ConsumerWidget {
     return teachersAsync.when(
       data: (teachers) {
         if (teachers.isEmpty) {
-          return Center(child: Text("No teachers found for $language"));
+          return Center(
+              child: Text(
+            "No teachers found for $language",
+            style: TextStyle(color: CustomColor.primary, fontSize: 20),
+          ));
         }
         return ListView.builder(
           itemCount: teachers.length,

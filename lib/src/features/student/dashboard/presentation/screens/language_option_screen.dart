@@ -11,16 +11,6 @@ class LanguageOptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
-    // final isLargeScreen = size.width > 600;
-
-    // final languages = [
-    //   {'name': 'English', 'icon': Icons.language},
-    //   {'name': 'Bangla', 'icon': Icons.translate},
-    //   {'name': 'French', 'icon': Icons.school},
-    //   {'name': 'Russian', 'icon': Icons.public},
-    // ];
-
     return Scaffold(
       backgroundColor: CustomColor.primary,
       appBar: AppBar(

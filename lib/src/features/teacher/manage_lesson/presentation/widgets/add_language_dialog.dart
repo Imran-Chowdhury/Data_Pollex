@@ -15,7 +15,7 @@ class AddLanguageDialog extends ConsumerStatefulWidget {
 
 class _AddLanguageDialogState extends ConsumerState<AddLanguageDialog> {
   String? selectedLanguage;
-  final langs = const ["Bangla", "English", "Russian", "French"];
+  final langs = const ["Bangla", "English", "Russian", "Dutch"];
 
   @override
   void initState() {

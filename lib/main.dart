@@ -15,15 +15,15 @@ void main() async {
   await Firebase.initializeApp(); // initialize Firebase
   await dotenv.load(fileName: ".env"); // load env file
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
-
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(
-      const ProviderScope(
-        child: MyApp(),
-      ),
-    );
-  });
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {

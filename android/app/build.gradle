@@ -33,6 +33,11 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 //        multiDexEnabled = true
+
+        ndk {
+            // Include only 64-bit architectures (ARM 64-bit, x86_64)
+            abiFilters 'arm64-v8a', 'x86_64'
+        }
     }
 
 //    packagingOptions {
