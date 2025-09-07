@@ -13,6 +13,7 @@ class NameRow extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Future<void> signOut() async {
       await ref.read(authViewModelProvider.notifier).signOut();
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

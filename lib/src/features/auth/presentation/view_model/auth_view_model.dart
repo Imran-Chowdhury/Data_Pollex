@@ -16,6 +16,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
     _init();
   }
 
+  void resetState() {
+    state = const AuthState();
+  }
+
   Future<void> _init() async {
     state = state.copyWith(isLoading: true);
 
@@ -84,7 +88,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
     state = state.copyWith(isLoading: true);
     try {
       await repository.signOut();
-      state = state.copyWith(user: null, isLoading: false, error: null);
+      state = const AuthState();
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
