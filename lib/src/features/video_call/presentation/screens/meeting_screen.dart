@@ -1,3 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+
+// final int userID = Random().nextInt(1000);
+
+class VideoCallPage extends StatelessWidget {
+  const VideoCallPage(
+      {super.key,
+      required this.scheduleId,
+      required this.userName,
+      required this.userId});
+
+  final String scheduleId;
+  final String userName;
+  final String userId;
+
+  @override
+  Widget build(BuildContext context) {
+    return ZegoUIKitPrebuiltCall(
+      userName: userName,
+      appID: CallInfo.appId,
+      appSign: CallInfo.appSign,
+      callID: scheduleId,
+      userID: userId,
+      config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
+    );
+  }
+}
+
+class CallInfo {
+  static const appId = 78613818;
+  static const appSign =
+      '764d891fe9dfdc5deec097e3c34dcd5e0fe77f77d66f4a3b151c4041cdc94083';
+}
 // import 'package:flutter/material.dart';
 // import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 //

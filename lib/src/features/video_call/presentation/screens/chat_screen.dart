@@ -1,15 +1,18 @@
+import 'package:data_pollex/src/features/video_call/presentation/screens/meeting_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
   final String chatWithName;
   final String scheduleId;
   final String userName;
+  final String userId;
 
   const ChatScreen({
     super.key,
     required this.chatWithName,
     required this.scheduleId,
     required this.userName,
+    required this.userId,
   });
 
   @override
@@ -24,15 +27,16 @@ class ChatScreen extends StatelessWidget {
             icon: const Icon(Icons.videocam),
             onPressed: () {
               // Navigate to video call screen
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (_) => MeetingScreen(
-              //       scheduleId: scheduleId,
-              //       displayName: userName,
-              //     ),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => VideoCallPage(
+                    scheduleId: scheduleId,
+                    userName: userName,
+                    userId: userId,
+                  ),
+                ),
+              );
             },
           ),
         ],

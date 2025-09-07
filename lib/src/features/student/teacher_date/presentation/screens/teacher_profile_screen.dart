@@ -35,6 +35,7 @@ class TeacherProfileScreen extends ConsumerWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ChatScreen(
+              userId: schedule.teacherId,
               userName: schedule.teacherName,
               chatWithName: schedule.studentName,
               scheduleId: schedule.id,

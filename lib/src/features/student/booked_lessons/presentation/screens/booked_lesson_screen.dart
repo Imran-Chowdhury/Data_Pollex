@@ -45,6 +45,7 @@ class BookedSchedulesScreen extends ConsumerWidget {
                         userName: schedule.studentName,
                         chatWithName: schedule.teacherName,
                         scheduleId: schedule.id,
+                        userId: schedule.studentId,
                       ),
                     ),
                   );
