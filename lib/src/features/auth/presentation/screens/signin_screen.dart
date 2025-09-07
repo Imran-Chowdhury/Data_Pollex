@@ -121,7 +121,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         : Center(
                             child: AuthButton(
                               buttonName: 'Sign In',
-                              buttonColor: const Color(0xFFed2f31),
+                              // buttonColor: const Color(0xFFed2f31),
                               icon: const Icon(
                                 Icons.login_outlined,
                                 color: Colors.white,

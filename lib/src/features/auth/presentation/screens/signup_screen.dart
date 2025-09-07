@@ -95,7 +95,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             ? const CircularProgressIndicator()
                             : AuthButton(
                                 buttonName: 'Sign Up',
-                                buttonColor: const Color(0XFFd71e23),
+                                // buttonColor: const Color(0XFFd71e23),
                                 icon: const Icon(
                                   Icons.app_registration_sharp,
                                   color: Colors.white,

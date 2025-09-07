@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/color.dart';
+
 class HeaderContainer extends StatelessWidget {
   const HeaderContainer({
     super.key,
@@ -13,12 +15,34 @@ class HeaderContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: height > 600 ? 250 : 150,
+      // decoration: const BoxDecoration(
+      //   color: Color(0xFFed2f31), // branded red
+      //   borderRadius: BorderRadius.only(
+      //     bottomRight: Radius.circular(40),
+      //     bottomLeft: Radius.circular(40),
+      //   ),
+      // ),
+
       decoration: const BoxDecoration(
-        color: Color(0xFFed2f31), // branded red
+        gradient: LinearGradient(
+          colors: [
+            CustomColor.primary,
+            CustomColor.primaryDark, // darker tone of primary
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(40),
           bottomLeft: Radius.circular(40),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 12,
+            offset: Offset(0, 6),
+          ),
+        ],
       ),
       child: Center(
         child: Column(

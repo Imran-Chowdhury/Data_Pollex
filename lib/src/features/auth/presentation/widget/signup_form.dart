@@ -89,13 +89,13 @@ class SignUpForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Checkbox(
-                    activeColor: const Color(0xFFed2f31),
+                    activeColor: CustomColor.primary,
                     value: role == Role.teacher,
                     onChanged: (_) => _roleNotifier.value = Role.teacher,
                   ),
                   const Text('Teacher'),
                   Checkbox(
-                    activeColor: const Color(0xFFed2f31),
+                    activeColor: CustomColor.primary,
                     value: role == Role.student,
                     onChanged: (_) => _roleNotifier.value = Role.student,
                   ),

@@ -1,3 +1,4 @@
+import 'package:data_pollex/src/core/utils/color.dart';
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
@@ -6,11 +7,11 @@ class AuthButton extends StatelessWidget {
     required this.buttonName,
     required this.onpressed,
     required this.icon,
-    required this.buttonColor,
+    // required this.buttonColor,
   });
 
   final String buttonName;
-  final Color buttonColor;
+  // final Color buttonColor;
   final Icon icon;
   final void Function()? onpressed;
 
@@ -21,7 +22,8 @@ class AuthButton extends StatelessWidget {
       width: 180, // full width of parent
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor,
+          // backgroundColor: buttonColor,
+          backgroundColor: CustomColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
