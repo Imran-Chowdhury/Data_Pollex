@@ -15,14 +15,15 @@ class ManageLessonsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: CustomColor.primary,
       appBar: AppBar(
-          backgroundColor: CustomColor.primary,
-          title: const Text(
-            "Manage Lessons",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: CustomColor.white,
-            ),
-          )),
+        backgroundColor: CustomColor.primary,
+        title: const Text(
+          "Manage Lessons",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: CustomColor.white,
+          ),
+        ),
+      ),
       body: const BackgroundContainer(
         child: LessonList(),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../../../../../core/utils/color.dart';
 import '../view_model/calendar_view_model.dart';
 import '../widgets/appointment_dialog.dart';
 
@@ -20,37 +21,79 @@ class CalendarScreen extends ConsumerWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(next.error.toString()),
-              backgroundColor: Colors.redAccent,
+              // backgroundColor: Colors.redAccent,
             ),
           );
         }
       },
     );
     return Scaffold(
-      appBar: AppBar(title: const Text("Calendar")),
-      body: SfCalendar(
-        view: calendarView,
-        showDatePickerButton: true,
-        initialSelectedDate: DateTime.now(),
-        onTap: (CalendarTapDetails details) {
-          if (details.date != null) {
-            final DateTime selectedDate = details.date!;
+        appBar: AppBar(
+          backgroundColor: CustomColor.primary,
+          title: const Text(
+            "Set Schedule",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: CustomColor.white,
+            ),
+          ),
+        ),
+        body: SfCalendar(
+          view: calendarView,
+          showDatePickerButton: true,
+          initialSelectedDate: DateTime.now(),
+          // onTap: (CalendarTapDetails details) {
+          //   if (details.date != null) {
+          //     final DateTime selectedDate = details.date!;
+          //     showBookings(context, selectedDate);
+          //   }
+          // },
 
-            /// Display the dialog for all bookings of the day
-            showBookings(context, selectedDate);
-          }
-        },
-        dataSource: AppointmentDataSource(schedules ?? []),
-        todayHighlightColor: const Color(0xFFd71e23),
-        headerStyle: const CalendarHeaderStyle(
-          backgroundColor: Color(0xFFd71e23),
-          textStyle: TextStyle(color: Colors.white),
-        ),
-        monthViewSettings: const MonthViewSettings(
-          appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
-        ),
-      ),
-    );
+          onTap: (CalendarTapDetails details) {
+            if (details.targetElement == CalendarElement.calendarCell &&
+                details.date != null) {
+              final DateTime selectedDate = details.date!;
+              showBookings(context, selectedDate);
+            }
+          },
+
+          dataSource: AppointmentDataSource(schedules ?? []),
+          todayHighlightColor: CustomColor.red, // Red dot stands out on teal
+          selectionDecoration: BoxDecoration(
+            color: CustomColor.primary.withOpacity(0.2), // soft teal background
+            border: Border.all(color: CustomColor.primary, width: 2),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          headerStyle: const CalendarHeaderStyle(
+            backgroundColor: CustomColor.primary, // matches brand
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          viewHeaderStyle: const ViewHeaderStyle(
+            backgroundColor: Color(0xFF2f5c5a), // darker teal for weekdays
+            dayTextStyle: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+            dateTextStyle: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          monthViewSettings: const MonthViewSettings(
+            appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+            monthCellStyle: MonthCellStyle(
+              // todayBackgroundColor:
+              //     CustomColor.primary, // highlights today cell
+              textStyle: TextStyle(color: Colors.black87),
+              trailingDatesTextStyle: TextStyle(color: Colors.grey),
+              leadingDatesTextStyle: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ));
   }
 
   void showBookings(BuildContext context, DateTime selectedDate) {
@@ -63,69 +106,6 @@ class CalendarScreen extends ConsumerWidget {
         });
   }
 }
-// class CalendarScreen extends ConsumerStatefulWidget {
-//   const CalendarScreen({super.key});
-//
-//   @override
-//   ConsumerState<CalendarScreen> createState() => _CalendarScreenState();
-// }
-//
-// class _CalendarScreenState extends ConsumerState<CalendarScreen> {
-//   final CalendarView _calendarView = CalendarView.month;
-//
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     ref.listenManual(scheduleControllerProvider, (prev, next) {
-//       if (next.hasError) {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(content: Text(next.error.toString())),
-//         );
-//       }
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final schedules = ref.watch(scheduleControllerProvider).valueOrNull;
-//
-//     return Scaffold(
-//       appBar: AppBar(title: const Text("Calendar")),
-//       body: SfCalendar(
-//         view: _calendarView,
-//         showDatePickerButton: true,
-//         initialSelectedDate: DateTime.now(),
-//         onTap: (CalendarTapDetails details) {
-//           if (details.date != null) {
-//             final DateTime selectedDate = details.date!;
-//             _showBookings(context, selectedDate);
-//           }
-//         },
-//         dataSource: AppointmentDataSource(schedules ?? []),
-//         todayHighlightColor: const Color(0xFFd71e23),
-//         headerStyle: const CalendarHeaderStyle(
-//           backgroundColor: Color(0xFFd71e23),
-//           textStyle: TextStyle(color: Colors.white),
-//         ),
-//         monthViewSettings: const MonthViewSettings(
-//           appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
-//         ),
-//       ),
-//     );
-//   }
-//
-//   void _showBookings(BuildContext context, DateTime selectedDate) {
-//     showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AppointmentDialogWidget(
-//           selectedDate: selectedDate,
-//         );
-//       },
-//     );
-//   }
-// }
 
 class AppointmentDataSource extends CalendarDataSource {
   AppointmentDataSource(List<Appointment> source) {

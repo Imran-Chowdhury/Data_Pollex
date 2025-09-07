@@ -5,7 +5,7 @@ import 'package:data_pollex/src/features/teacher/dashboard/presentation/screens/
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../widgets/custom_button.dart';
+import '../../../../widgets/auth_button.dart';
 import '../providers/auth_providers.dart';
 import '../widget/header_container.dart';
 import '../widget/signin_form.dart';
@@ -119,7 +119,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     isLoading
                         ? const CircularProgressIndicator()
                         : Center(
-                            child: CustomButton(
+                            child: AuthButton(
                               buttonName: 'Sign In',
                               buttonColor: const Color(0xFFed2f31),
                               icon: const Icon(

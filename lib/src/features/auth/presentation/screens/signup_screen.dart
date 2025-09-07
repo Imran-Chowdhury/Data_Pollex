@@ -3,7 +3,7 @@ import 'package:data_pollex/src/features/auth/presentation/providers/auth_provid
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../widgets/custom_button.dart';
+import '../../../../widgets/auth_button.dart';
 import '../widget/header_container.dart';
 import '../widget/signup_form.dart';
 
@@ -93,7 +93,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Center(
                         child: isLoading
                             ? const CircularProgressIndicator()
-                            : CustomButton(
+                            : AuthButton(
                                 buttonName: 'Sign Up',
                                 buttonColor: const Color(0XFFd71e23),
                                 icon: const Icon(
