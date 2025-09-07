@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/color.dart';
-import 'add_booking_dialog.dart';
 
 class CalendarSetButton extends StatelessWidget {
   const CalendarSetButton({
@@ -25,11 +24,6 @@ class CalendarSetButton extends StatelessWidget {
         elevation: 4,
       ),
       onPressed: onClicked,
-
-      //     () {
-      //   Navigator.of(context).pop();
-      //   addBooking(context, selectedDate);
-      // },
       child: Text(title),
     );
   }

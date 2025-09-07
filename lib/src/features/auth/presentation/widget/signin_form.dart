@@ -35,11 +35,17 @@ class SignInForm extends StatelessWidget {
             controller: emailController,
             labelText: 'Email',
             validate: Validator.emailValidator,
+            prefixIcon: const Icon(
+              Icons.email,
+            ),
           ),
           const SizedBox(height: 24),
           PasswordTextField(
             labelText: 'Password',
             controller: passwordController,
+            prefixIcon: const Icon(
+              Icons.password,
+            ),
           ),
         ],
       ),

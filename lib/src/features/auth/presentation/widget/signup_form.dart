@@ -2,6 +2,7 @@ import 'package:data_pollex/src/features/auth/presentation/widget/password_text_
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/role.dart';
+import '../../../../core/utils/color.dart';
 import '../../../../core/utils/validator.dart';
 import 'custom_text_field.dart';
 
@@ -44,24 +45,40 @@ class SignUpForm extends StatelessWidget {
             controller: nameController,
             labelText: 'Name',
             validate: Validator.personNameValidator,
+            prefixIcon: const Icon(
+              Icons.person,
+              color: CustomColor.primary,
+            ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           CustomTextField(
             controller: emailController,
             labelText: 'Email',
             validate: Validator.emailValidator,
+            prefixIcon: const Icon(
+              Icons.email,
+              color: CustomColor.primary,
+            ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           PasswordTextField(
             labelText: 'Password',
             controller: passwordController,
+            prefixIcon: const Icon(
+              Icons.password,
+              color: CustomColor.primary,
+            ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           PasswordTextField(
             labelText: 'Confirm Password',
             controller: confirmPasswordController,
+            prefixIcon: const Icon(
+              Icons.password_outlined,
+              color: CustomColor.primary,
+            ),
           ),
 
           /// Role selection
