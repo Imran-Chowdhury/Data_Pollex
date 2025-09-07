@@ -18,6 +18,7 @@ final authRepositoryProvider = Provider((ref) {
 
 final authViewModelProvider =
     StateNotifierProvider<AuthViewModel, AuthState>((ref) {
+  // ref.keepAlive();
   return AuthViewModel(
     repository: ref.read(authRepositoryProvider),
   );

@@ -28,24 +28,24 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             emailController.text.trim(),
             passwordController.text.trim(),
           );
-      final user = ref.read(authViewModelProvider).user;
-
-      /// If no error then navigate to appropriate screen
-      if (user != null) {
-        if (user.role == Role.teacher) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const TeacherDashboardScreen()),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const StudentDashboardScreen()),
-          );
-        }
-      }
+      // final user = ref.read(authViewModelProvider).user;
+      //
+      // /// If no error then navigate to appropriate screen
+      // if (user != null) {
+      //   if (user.role == Role.teacher) {
+      //     Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => const TeacherDashboardScreen()),
+      //     );
+      //   } else {
+      //     Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => const StudentDashboardScreen()),
+      //     );
+      //   }
+      // }
     }
   }
 
@@ -60,6 +60,23 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(next.error!),
         ));
+      }
+
+      /// If no error then navigate to appropriate screen
+      if (next.user != null) {
+        if (next.user!.role == Role.teacher) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const TeacherDashboardScreen()),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const StudentDashboardScreen()),
+          );
+        }
       }
     });
   }

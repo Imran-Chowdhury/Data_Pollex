@@ -2,6 +2,7 @@ import 'package:data_pollex/src/features/teacher/dashboard/presentation/widgets/
 import 'package:data_pollex/src/features/teacher/dashboard/presentation/widgets/name_row.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../widgets/dashboard_header.dart';
 import '../../../manage_lesson/presentation/screens/manage_lesson_screen.dart';
 import '../../../manage_schedule/presentation/screens/calendar_screen.dart';
 
@@ -15,11 +16,11 @@ class TeacherDashboardScreen extends StatelessWidget {
       body: Column(
         children: [
           // Header stays on top
-          // const Align(
-          //   alignment: Alignment.topCenter,
-          //   child: DashboardHeader(),
-          // ),
-          const NameRow(),
+          const Align(
+            alignment: Alignment.topCenter,
+            child: DashboardHeader(),
+          ),
+          // const NameRow(),
 
           const Padding(
             padding: EdgeInsets.all(20.0),

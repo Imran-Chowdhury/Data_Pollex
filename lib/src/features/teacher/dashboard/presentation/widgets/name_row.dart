@@ -11,6 +11,20 @@ class NameRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Future<void> signOut() async {
+      await ref.read(authViewModelProvider.notifier).signOut();
+      // final user = ref.read(authViewModelProvider).user;
+      // if (user == null) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SignInScreen(),
+        ),
+        (route) => false, // This removes all previous routes
+      );
+      // }
+    }
+
     final authState = ref.watch(authViewModelProvider).user;
 
     return Padding(
@@ -34,7 +48,7 @@ class NameRow extends ConsumerWidget {
                 width: 10,
               ),
               Text(
-                authState!.name,
+                authState?.name ?? '',
                 style: const TextStyle(
                   // color: Colors.,
                   fontSize: 30,
@@ -67,16 +81,7 @@ class NameRow extends ConsumerWidget {
           ),
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              ref.read(authViewModelProvider.notifier).signOut().then((_) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignInScreen(),
-                  ),
-                );
-              });
-            },
+            onPressed: signOut,
           ),
         ],
       ),
