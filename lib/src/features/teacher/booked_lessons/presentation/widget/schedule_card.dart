@@ -7,14 +7,15 @@ class ScheduleCard extends StatelessWidget {
   final String studentName;
   final String studentId;
   final bool isBooked;
+  final String title;
 
-  const ScheduleCard({
-    super.key,
-    required this.date,
-    required this.studentName,
-    required this.studentId,
-    required this.isBooked,
-  });
+  const ScheduleCard(
+      {super.key,
+      required this.date,
+      required this.studentName,
+      required this.studentId,
+      required this.isBooked,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class ScheduleCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Student: $studentName',
+                    '$title: $studentName',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -60,9 +61,10 @@ class ScheduleCard extends StatelessWidget {
               ),
             ),
             // Trailing booking status
+
             Icon(
-              isBooked ? Icons.check_circle : Icons.pending,
-              color: isBooked ? Colors.green : Colors.grey,
+              isBooked ? Icons.video_call : Icons.video_call,
+              color: CustomColor.primary,
               size: 28,
             ),
           ],

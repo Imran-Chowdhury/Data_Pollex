@@ -12,7 +12,7 @@ class StudentLessonList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // final state = ref.watch(manageLessonsProvider);
 
-    final languages = [
+    const languages = [
       'Bangla',
       'French',
       'Russian',

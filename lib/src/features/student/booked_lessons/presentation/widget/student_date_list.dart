@@ -1,19 +1,19 @@
-import 'package:data_pollex/src/features/teacher/booked_lessons/presentation/widget/schedule_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../auth/presentation/providers/auth_providers.dart';
+import '../../../../teacher/booked_lessons/presentation/widget/schedule_card.dart';
 import '../../../../video_call/presentation/screens/chat_screen.dart';
 import '../view_model/booked_lesson_view_model.dart';
 
-class DateList extends ConsumerWidget {
-  const DateList({super.key, required this.language});
+class StudentDateList extends ConsumerWidget {
+  const StudentDateList({super.key, required this.language});
   final String language;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final teacherId = ref.read(authViewModelProvider).user!.id;
-    final schedulesAsync = ref.watch(teacherBookedSchedulesProvider(
-      BookedLanguage(userId: teacherId, language: language),
+    final studentId = ref.read(authViewModelProvider).user!.id;
+    final schedulesAsync = ref.watch(bookedSchedulesProvider(
+      StudentLanguage(studentId: studentId, language: language),
     ));
     return schedulesAsync.when(
       data: (schedules) {
@@ -32,21 +32,19 @@ class DateList extends ConsumerWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ChatScreen(
-                      chatWithName: schedule.studentName,
+                      chatWithName: schedule.teacherName,
                       scheduleId: schedule.id,
-                      userName: schedule.teacherName,
-                      userId: schedule.teacherId,
+                      userName: schedule.studentName,
+                      userId: schedule.studentId,
                     ),
                   ),
                 );
               },
               child: ScheduleCard(
-                title: 'Student Name',
+                title: 'Teacher Name',
                 date: schedule.date,
-                studentName:
-                    schedule.studentName.isEmpty ? 'N/A' : schedule.studentName,
-                studentId:
-                    schedule.studentId.isEmpty ? 'N/A' : schedule.studentId,
+                studentName: schedule.teacherName,
+                studentId: schedule.teacherId,
                 isBooked: schedule.isBooked,
               ),
             );
