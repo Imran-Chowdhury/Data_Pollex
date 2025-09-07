@@ -5,6 +5,7 @@ import 'package:data_pollex/src/features/student/dashboard/presentation/screens/
 import 'package:data_pollex/src/features/teacher/dashboard/presentation/screens/teacher_dashboard_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -15,11 +16,14 @@ void main() async {
   await dotenv.load(fileName: ".env"); // load env file
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
 
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(
+      const ProviderScope(
+        child: MyApp(),
+      ),
+    );
+  });
 }
 
 class MyApp extends ConsumerWidget {
