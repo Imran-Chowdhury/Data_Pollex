@@ -1,7 +1,8 @@
-import 'package:data_pollex/src/features/student/teacher_date/presentation/screens/teacher_dates_screen.dart';
+import 'package:data_pollex/src/features/student/available_teachers/presentation/widget/teacher_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../teacher_date/presentation/screens/teacher_dates_screen.dart';
 import '../provider/teacher_by_lang_provider.dart';
 
 class TeacherList extends ConsumerWidget {
@@ -22,35 +23,23 @@ class TeacherList extends ConsumerWidget {
           itemBuilder: (context, index) {
             final teacher = teachers[index];
             return GestureDetector(
-              onTap: () {},
-              child: Card(
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                elevation: 3,
-                child: ListTile(
-                  leading: const CircleAvatar(
-                    backgroundColor: Colors.deepPurple,
-                    child: Icon(Icons.person, color: Colors.white),
-                  ),
-                  title: Text(teacher.name),
-                  subtitle: Text("Email: ${teacher.email}"),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeacherDatesScreen(
-                          teacherId: teachers[index].id,
-                          language: language,
-                        ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TeacherDatesScreen(
+                        teacherName: teachers[index].name,
+                        teacherId: teachers[index].id,
+                        language: language,
                       ),
-                    );
-                  },
-                ),
-              ),
-            );
+                    ),
+                  );
+                },
+                child: TeacherCard(
+                    teacherName: teacher.name,
+                    email: teacher.email,
+                    userId: teacher.id,
+                    subtitle: 'Email'));
           },
         );
       },

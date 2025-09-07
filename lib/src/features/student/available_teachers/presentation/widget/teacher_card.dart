@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/color.dart';
 
-class CustomCard extends StatelessWidget {
-  final String mainText;
-  final String userName;
+class TeacherCard extends StatelessWidget {
+  final String teacherName;
+  final String email;
   final String userId;
-  final bool isBooked;
+  // final bool isBooked;
   final String subtitle;
 
-  const CustomCard(
-      {super.key,
-      required this.mainText,
-      required this.userName,
-      required this.userId,
-      required this.isBooked,
-      required this.subtitle});
+  const TeacherCard({
+    super.key,
+    required this.teacherName,
+    required this.email,
+    required this.userId,
+    // required this.isBooked,
+    required this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class CustomCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    mainText,
+                    teacherName,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -50,7 +51,7 @@ class CustomCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '$subtitle: $userName',
+                    '$subtitle: $email',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -62,8 +63,8 @@ class CustomCard extends StatelessWidget {
             ),
             // Trailing booking status
 
-            Icon(
-              isBooked ? Icons.video_call : Icons.video_call,
+            const Icon(
+              Icons.arrow_forward_ios,
               color: CustomColor.primary,
               size: 28,
             ),

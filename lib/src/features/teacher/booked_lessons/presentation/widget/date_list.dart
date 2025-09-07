@@ -2,8 +2,9 @@ import 'package:data_pollex/src/features/teacher/booked_lessons/presentation/wid
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../core/utils/color.dart';
 import '../../../../auth/presentation/providers/auth_providers.dart';
-import '../../../../video_call/presentation/screens/chat_screen.dart';
+import '../../../../video_call/presentation/screens/meeting_screen.dart';
 import '../view_model/booked_lesson_view_model.dart';
 
 class DateList extends ConsumerWidget {
@@ -19,7 +20,10 @@ class DateList extends ConsumerWidget {
       data: (schedules) {
         if (schedules.isEmpty) {
           return const Center(
-            child: Text('No booked schedules.'),
+            child: Text(
+              'No booked schedules.',
+              style: TextStyle(color: CustomColor.primary, fontSize: 20),
+            ),
           );
         }
         return ListView.builder(
@@ -31,22 +35,27 @@ class DateList extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ChatScreen(
-                      chatWithName: schedule.studentName,
+                    builder: (context) => VideoCallPage(
                       scheduleId: schedule.id,
                       userName: schedule.teacherName,
                       userId: schedule.teacherId,
                     ),
+
+                    //     ChatScreen(
+                    //   chatWithName: schedule.studentName,
+                    //   scheduleId: schedule.id,
+                    //   userName: schedule.teacherName,
+                    //   userId: schedule.teacherId,
+                    // ),
                   ),
                 );
               },
-              child: ScheduleCard(
-                title: 'Student Name',
-                date: schedule.date,
-                studentName:
+              child: CustomCard(
+                subtitle: 'Student Name',
+                mainText: schedule.date,
+                userName:
                     schedule.studentName.isEmpty ? 'N/A' : schedule.studentName,
-                studentId:
-                    schedule.studentId.isEmpty ? 'N/A' : schedule.studentId,
+                userId: schedule.studentId.isEmpty ? 'N/A' : schedule.studentId,
                 isBooked: schedule.isBooked,
               ),
             );

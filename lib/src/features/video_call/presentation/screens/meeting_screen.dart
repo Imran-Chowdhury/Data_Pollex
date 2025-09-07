@@ -16,19 +16,19 @@ class VideoCallPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ZegoUIKitPrebuiltCall(
-        userName: userName,
-        appID: int.parse(CallInfo.appId),
-        appSign: CallInfo.appSign,
-        callID: scheduleId,
-        userID: userId,
-        config: ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall()
-        // ..audioConfig = ZegoAudioConfig(
-        //   enableAEC: true,  // Enable echo cancellation
-        //   enableAGC: true,  // Automatic gain control
-        //   enableNS: true,   // Noise suppression
-        // ),
-        // config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
-        );
+      userName: userName,
+      appID: int.parse(CallInfo.appId),
+      appSign: CallInfo.appSign,
+      callID: scheduleId,
+      userID: userId,
+      // config: ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall()
+      // ..audioConfig = ZegoAudioConfig(
+      //   enableAEC: true,  // Enable echo cancellation
+      //   enableAGC: true,  // Automatic gain control
+      //   enableNS: true,   // Noise suppression
+      // ),
+      config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
+    );
   }
 }
 
