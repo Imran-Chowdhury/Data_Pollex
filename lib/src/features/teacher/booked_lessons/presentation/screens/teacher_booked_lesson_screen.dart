@@ -14,9 +14,9 @@ class TeacherBookedLessonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColor.primaryColor,
+      backgroundColor: CustomColor.primary,
       appBar: AppBar(
-        backgroundColor: CustomColor.primaryColor,
+        backgroundColor: CustomColor.primary,
         title: const Text(
           'Booked Schedules',
           style: TextStyle(

@@ -31,7 +31,7 @@ class ScheduleCard extends StatelessWidget {
             const Icon(
               Icons.calendar_today,
               size: 36,
-              color: CustomColor.primaryColor,
+              color: CustomColor.primary,
             ),
             const SizedBox(width: 12),
             // Info column
@@ -44,7 +44,7 @@ class ScheduleCard extends StatelessWidget {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: CustomColor.primaryColor,
+                      color: CustomColor.primary,
                     ),
                   ),
                   const SizedBox(height: 4),

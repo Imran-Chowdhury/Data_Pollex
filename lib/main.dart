@@ -29,16 +29,35 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authViewModelProvider);
 
+    final appTheme = ThemeData(
+      iconTheme: const IconThemeData(
+        color: Colors.white, // normal icons
+      ),
+      appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(
+          color: Colors.white, // AppBar icons (back, menu, actions)
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        backgroundColor: Colors.blue, // optional
+      ),
+    );
+
     if (authState.isLoading) {
-      return const MaterialApp(
+      return MaterialApp(
+        theme: appTheme,
         debugShowCheckedModeBanner: false,
-        home: Scaffold(body: Center(child: CircularProgressIndicator())),
+        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
       );
     }
 
     if (authState.user != null) {
       // Auto navigate to correct dashboard
       return MaterialApp(
+        theme: appTheme,
         debugShowCheckedModeBanner: false,
         home: authState.user!.role == Role.teacher
             ? const TeacherDashboardScreen()

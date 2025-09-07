@@ -1,107 +1,119 @@
 import 'package:data_pollex/src/core/utils/color.dart';
 import 'package:flutter/material.dart';
 
-// class TeacherDashboardTile extends StatelessWidget {
-//   const TeacherDashboardTile({
-//     super.key,
-//     required this.icon,
-//     required this.title,
-//     required this.color,
-//   });
-//
-//   final IconData icon;
-//   final String title;
-//   final Color color;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: 220,
-//       width: 150,
-//       decoration: BoxDecoration(
-//         color: color,
-//         borderRadius: BorderRadius.circular(30),
-//         boxShadow: [
-//           BoxShadow(
-//             color: color.withOpacity(0.5),
-//             blurRadius: 10,
-//             offset: const Offset(0, 5),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Icon(icon, size: 50, color: Colors.white),
-//           const SizedBox(height: 20),
-//           Text(
-//             title,
-//             textAlign: TextAlign.center,
-//             style: const TextStyle(
-//               color: Colors.white,
-//               fontSize: 18,
-//               fontWeight: FontWeight.bold,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class LessonCard extends StatelessWidget {
   final String title;
   final IconData icon;
+  final VoidCallback onTap;
 
-  const LessonCard({super.key, required this.title, required this.icon});
+  const LessonCard({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: Container(
-            width: 300,
-            height: 150,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: CustomColor.primaryColor,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(.1),
-                  blurRadius: 12,
-                  offset: const Offset(0, 6),
-                ),
-              ],
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, 6),
             ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                children: [
-                  Icon(
-                    icon,
-                    size: 50,
-                    color: CustomColor.white,
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+          ],
+        ),
+        child: Row(
+          children: [
+            const SizedBox(width: 20),
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: CustomColor.primary.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon,
+                color: CustomColor.primary,
+                size: 32,
               ),
             ),
-          ),
+            const SizedBox(width: 20),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
+
+// class LessonCard extends StatelessWidget {
+//   final String title;
+//   final IconData icon;
+//
+//   const LessonCard({super.key, required this.title, required this.icon});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(
+//       children: [
+//         Padding(
+//           padding: const EdgeInsets.only(top: 20.0),
+//           child: Container(
+//             width: 300,
+//             height: 150,
+//             padding: const EdgeInsets.all(16),
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(20),
+//               color: CustomColor.primaryColor,
+//               boxShadow: [
+//                 BoxShadow(
+//                   color: Colors.black.withOpacity(.1),
+//                   blurRadius: 12,
+//                   offset: const Offset(0, 6),
+//                 ),
+//               ],
+//             ),
+//             child: Align(
+//               alignment: Alignment.centerLeft,
+//               child: Row(
+//                 children: [
+//                   Icon(
+//                     icon,
+//                     size: 50,
+//                     color: CustomColor.white,
+//                   ),
+//                   const SizedBox(
+//                     width: 20,
+//                   ),
+//                   Text(
+//                     title,
+//                     style: const TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
