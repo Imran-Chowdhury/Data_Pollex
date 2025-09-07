@@ -59,7 +59,6 @@ class AppointmentDialogWidget extends ConsumerWidget {
                   const CalendarCancelButton(),
                   const SizedBox(width: 12),
                   CalendarSetButton(
-                    selectedDate: selectedDate,
                     onClicked: () {
                       addBooking(context, selectedDate);
                     },

@@ -4,13 +4,12 @@ import '../../../../../core/utils/color.dart';
 import 'add_booking_dialog.dart';
 
 class CalendarSetButton extends StatelessWidget {
-  const CalendarSetButton(
-      {super.key,
-      required this.title,
-      required this.onClicked,
-      required this.selectedDate});
+  const CalendarSetButton({
+    super.key,
+    required this.title,
+    required this.onClicked,
+  });
 
-  final DateTime selectedDate;
   final void Function()? onClicked;
   final String title;
   @override

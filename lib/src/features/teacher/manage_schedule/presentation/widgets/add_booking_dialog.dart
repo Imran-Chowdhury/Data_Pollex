@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data_pollex/src/features/teacher/manage_schedule/presentation/view_model/calendar_view_model.dart';
 import 'package:data_pollex/src/features/teacher/manage_schedule/presentation/widgets/calendar_button.dart';
 import 'package:flutter/material.dart';
@@ -73,72 +75,44 @@ class AddBookingDialogWidget extends ConsumerWidget {
               ),
             ),
 
-            // Buttons side by side
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // Cancel Button
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[300],
-                      foregroundColor: Colors.black87,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 12),
-                      elevation: 0,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Cancel'),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  // Add Button
-
-                  CalendarSetButton(
-                    title: 'Add',
-                    onClicked: () async {
-                      final lessonSelectorState = context
-                          .findAncestorStateOfType<LessonSelectorState>();
-                      final selectedLanguage =
-                          lessonSelectorState?.selectedLanguage;
-                      if (selectedLanguage != null) {
-                        await ref
-                            .read(scheduleControllerProvider.notifier)
-                            .addSchedule({
-                          "language": selectedLanguage,
-                          "teacherId": ref.read(authViewModelProvider).user!.id,
-                          "teacherName":
-                              ref.read(authViewModelProvider).user!.name,
-                          "date": selectedDate.toIso8601String(),
-                          "isBooked": false,
-                        });
-                      }
-                      Navigator.of(context).pop();
-                    },
-                    selectedDate: selectedDate,
-                  )
-                  // ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: CustomColor.primary,
-                  //     foregroundColor: CustomColor.white,
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(12),
-                  //     ),
-                  //     padding: const EdgeInsets.symmetric(
-                  //         horizontal: 20, vertical: 12),
-                  //     elevation: 4,
-                  //   ),
-                  //   onPressed:
-                  //   child: const Text('Add'),
-                  // ),
-                ],
-              ),
-            ),
+            // // Buttons side by side
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       // Cancel Button
+            //       const CalendarCancelButton(),
+            //
+            //       const SizedBox(width: 12),
+            //       // Add Button
+            //       CalendarSetButton(
+            //         title: 'Add',
+            //         onClicked: () async {
+            //           final lessonSelectorState = context
+            //               .findAncestorStateOfType<LessonSelectorState>();
+            //           final selectedLanguage =
+            //               lessonSelectorState?.selectedLanguage;
+            //           log('The selected language is $selectedLanguage');
+            //           if (selectedLanguage != null) {
+            //             await ref
+            //                 .read(scheduleControllerProvider.notifier)
+            //                 .addSchedule({
+            //               "language": selectedLanguage,
+            //               "teacherId": ref.read(authViewModelProvider).user!.id,
+            //               "teacherName":
+            //                   ref.read(authViewModelProvider).user!.name,
+            //               "date": selectedDate.toIso8601String(),
+            //               "isBooked": false,
+            //             });
+            //           }
+            //           Navigator.of(context).pop();
+            //         },
+            //         selectedDate: selectedDate,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

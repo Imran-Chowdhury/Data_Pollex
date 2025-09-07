@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../../../../core/utils/color.dart';
+import '../../../manage_lesson/presentation/view_model/manage_lesson_view_model.dart';
 import '../view_model/calendar_view_model.dart';
 import '../widgets/appointment_dialog.dart';
 
@@ -11,6 +12,7 @@ class CalendarScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lesson = ref.watch(manageLessonsProvider);
     final schedules = ref.watch(scheduleControllerProvider).valueOrNull;
     final CalendarView calendarView = CalendarView.month;
 

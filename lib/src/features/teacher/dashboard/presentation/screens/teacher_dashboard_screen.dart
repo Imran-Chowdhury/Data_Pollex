@@ -1,12 +1,9 @@
 import 'package:data_pollex/src/features/teacher/dashboard/presentation/widgets/dashboard_tile.dart';
-import 'package:data_pollex/src/features/teacher/dashboard/presentation/widgets/name_row.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../core/utils/color.dart' show CustomColor;
+import '../../../../../core/utils/color.dart';
 import '../../../../../widgets/dashboard_header.dart';
-import '../../../../auth/presentation/providers/auth_providers.dart';
-import '../../../../auth/presentation/screens/signin_screen.dart';
+
 import '../../../manage_lesson/presentation/screens/manage_lesson_screen.dart';
 import '../../../manage_schedule/presentation/screens/calendar_screen.dart';
 

@@ -1,3 +1,4 @@
+import 'package:data_pollex/src/core/utils/color.dart';
 import 'package:data_pollex/src/features/teacher/manage_schedule/data/datasource/data_source.dart';
 import 'package:data_pollex/src/features/teacher/manage_schedule/service/schedule_local_storage.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,8 @@ class ScheduleRepository {
         startTime: DateTime.parse(item['date']),
         endTime: DateTime.parse(item['date']).add(const Duration(hours: 1)),
         subject: "${item['language']} (${item['teacherName']})",
-        color: (item['isBooked'] ?? false) ? Colors.grey : Colors.blue,
+        color:
+            (item['isBooked'] ?? false) ? Colors.grey : CustomColor.primaryDark,
       );
     }).toList();
   }
