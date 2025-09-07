@@ -22,7 +22,7 @@
 
     <application
         tools:replace="android:label"
-        android:label="data_pollex"
+        android:label="Fluento"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

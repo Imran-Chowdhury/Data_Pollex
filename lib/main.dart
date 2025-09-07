@@ -50,13 +50,13 @@ class MyApp extends ConsumerWidget {
       ),
     );
 
-    if (authState.isLoading) {
-      return MaterialApp(
-        theme: appTheme,
-        debugShowCheckedModeBanner: false,
-        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-      );
-    }
+    // if (authState.isLoading) {
+    //   return MaterialApp(
+    //     theme: appTheme,
+    //     debugShowCheckedModeBanner: false,
+    //     home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+    //   );
+    // }
 
     if (authState.user != null) {
       // Auto navigate to correct dashboard

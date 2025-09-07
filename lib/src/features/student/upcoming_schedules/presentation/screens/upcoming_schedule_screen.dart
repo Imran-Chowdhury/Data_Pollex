@@ -1,16 +1,12 @@
-import 'package:data_pollex/src/widgets/background_container.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/color.dart';
-import '../widget/student_date_list.dart';
+import '../../../../../widgets/background_container.dart';
+import '../widgets/upcoming_schedule_list.dart';
 
-class BookedSchedulesScreen extends StatelessWidget {
-  final String language;
-
-  const BookedSchedulesScreen({
+class UpcomingSchedulesScreen extends StatelessWidget {
+  const UpcomingSchedulesScreen({
     super.key,
-    // required this.studentId,
-    required this.language,
   });
 
   @override
@@ -20,18 +16,16 @@ class BookedSchedulesScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: CustomColor.primary,
         title: const Text(
-          'Booked Schedules',
+          'Upcoming Schedules',
           style: TextStyle(
             color: CustomColor.white,
           ),
         ),
       ),
-      body: BackgroundContainer(
+      body: const BackgroundContainer(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: StudentDateList(
-            language: language,
-          ),
+          padding: EdgeInsets.all(15.0),
+          child: UpcomingScheduleList(),
         ),
       ),
     );
